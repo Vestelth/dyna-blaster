@@ -1,40 +1,6 @@
 $(function () {
 
-class Bricks {
-
-}
-
-class Ghosts {
-
-}
-
-class Game {
-  constructor(){
-    this.x = 0;
-    this.y = 0;
-    this.board = $('div.game-grid');
-    this.slots = [];
-    this.freeSlots = [];
-    this.ghosts = new Ghosts();
-    this.bricks = new Bricks();
-  }
-
-  // FIND BRICK SLOTS ----------------------
-  generateLevelSlotsArray() {
-    // make and put all possible green slots in an array
-    for( let i = 0; i < 13; i++ ){
-      for( let j = 0; j < 13; j++ ){
-        if ( i % 2 != 0  && j % 2 != 0 ){
-        } else {
-          this.y = i * 40;
-          this.x = j * 40;
-          this.slots.push([this.x, this.y]);
-        }
-      }
-    }
-  }
-
-  // GENERATE LEVEL ------------------------
+class Level {
   generateLevel() {
     // generate slots
     this.generateLevelSlotsArray();
@@ -66,12 +32,12 @@ class Game {
         'left': this.x +'px',
         'top': this.y +'px',
       });
+
       // remove taken position from free slots
       freeSlots.splice(pos, 1);
-
     });
 
-    // GENERATE GHOSTS ---------------------
+    // GENERATE GHOSTS ------------------------ /
     function generateGhosts() {
       // string for div.ghost elements
       let divGhostsString = '<div class="ghost"></div><div class="ghost"></div><div class="ghost"></div><div class="ghost"></div>';
@@ -96,6 +62,46 @@ class Game {
     }
     generateGhosts();
   }
+}
+
+class Ghosts {
+
+}
+
+class Game {
+  constructor(){
+    this.x = 0;
+    this.y = 0;
+    this.board = $('div.game-grid');
+    this.player = $('div.player');
+    this.brick = $('div.brick');
+    this.slots = [];
+    // this.freeSlots = [];
+    // this.ghosts = new Ghosts();
+    this.level = new Level();
+  }
+
+  showLevel() {
+
+  }
+
+  // --- FIND BRICK SLOTS ------------------------- /
+  generateLevelSlotsArray() {
+    // make and put all possible green slots in an array
+    for( let i = 0; i < 13; i++ ){
+      for( let j = 0; j < 13; j++ ){
+        if ( i % 2 != 0  && j % 2 != 0 ){
+        } else {
+          this.y = i * 40;
+          this.x = j * 40;
+          this.slots.push([this.x, this.y]);
+        }
+      }
+    }
+  }
+
+  // --- GENERATE LEVEL --------------------------- /
+
 }
 
 let game = new Game();

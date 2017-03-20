@@ -19,8 +19,8 @@ $(function () {
       this.wall    =  $('div.wall');
       this.brick   =  $('div.brick');
       // this.takenSlots = [];
-      // this.ghosts = new Ghosts();
-      // this.level = new Level();
+      this.ghosts = new Ghosts();
+      this.level = new Level();
     }
 
     // --- FIND BRICK SLOTS ------------------------- /
@@ -70,7 +70,7 @@ $(function () {
       // create elements with jQuery and append them
       $('div.game-grid').append($(divString));
 
-      // making slots for player
+      // making grid slots for player
       let freeSlots = this.slots.slice();
       freeSlots.splice(0, 2);
       freeSlots.splice(11, 1);
@@ -130,13 +130,13 @@ $(function () {
       };
       /// store reference to character's position and element
       let player = {
-        x     : 2,
-        y     : 2,
-        speed : 7,
-        div   : $('div.player')
+        x     :  2,
+        y     :  2,
+        speed :  7,
+        div   :  $('div.player')
       };
 
-      /// key detection (better to use addEventListener, but this will do)
+      /// key detection
       document.body.onkeyup = document.body.onkeydown = function(event){
         keys[event.which] = event.type == 'keydown';
       };
@@ -149,30 +149,54 @@ $(function () {
         player.div.css({'top' : player.y});
       };
 
-      function checkWallCollisions() {
+      function wallCollisions() {
         // wall size = brick size; width = height
         let x = 0; let y = 0;
-        const obstacleSize = $('div.wall').css('width'); // 40px
-        const playerSize = $('div.player').css('width');
+
+        const playerSize = parseInt($('div.player').css('width'));
+        const objSize = parseInt($('div.wall').css('width'));
+
         const walls = $('div.wall');
         const bricks = $('div.brick');
         let objPos = [];
 
         // making an array with all obstacle positions
         $('div.brick').each( function(index) {
-          x = $(this).position().left + 'px';
-          y = $(this).position().top + 'px';
+          x = $(this).position().left ;
+          y = $(this).position().top;
           objPos.push([x, y]);
         });
         $('div.wall').each( function(index) {
-          x = $(this).position().left + 'px';
-          y = $(this).position().top + 'px';
+          x = $(this).position().left;
+          y = $(this).position().top;
           objPos.push([x, y]);
         });
-        console.log(objPos);
+
+
+        function checkWallCollisions() {
+            let playerX = $('div.player').position().left;
+            let playerY = $('div.player').position().top;
+            let collision = false;
+
+            for ( let i = 0; i < objPos.length; i++ ){
+              if (playerX + playerSize > objPos[i][0] &&
+                  playerX < objPos[i][0] + objSize &&
+                  playerY + playerSize > objPos[i][1] &&
+                  playerY < objPos[i][1] + objSize)
+              {
+                // collision detected!
+                console.log(true);
+                return true;
+              }
+            }
+        }
+
+        let collisionInterval = setInterval(function () {
+          checkWallCollisions();
+        }, 20);
+
       }
 
-      checkWallCollisions();
 
       /// player control
       function detectPlayerMovement() {
@@ -185,7 +209,7 @@ $(function () {
           movePlayer(1, 0);
         }
         if ( keys[keys.UP] ) {
-          // <-- animate here
+          // <-- animate
           movePlayer(0, -1);
         }
         if ( keys[keys.DOWN] ) {
@@ -202,9 +226,7 @@ $(function () {
         detectPlayerMovement();
       }, 40);
 
-
     } // end of playerMovement() method
-
   } // end of Game() object
 
   let game = new Game();

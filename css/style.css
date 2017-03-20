@@ -16,11 +16,9 @@ div.game-grid {
 div.wall {
   width: 40px;
   height: 40px;
-  margin-left: 40px;
-  margin-top: 40px;
   border-radius: 2px;
   background-color: rgb(65, 65, 65);
-  float: left;
+  position: absolute;
 }
 
 div.brick {
@@ -45,9 +43,12 @@ div.ghost {
 
 div.player {
   position: absolute;
+  z-index: 3;
   left: 2px; top: 2px;
   width: 38px;
   height: 38px;
+  /*width: 50px;
+  height: 50px;*/
   border-radius: 10px;
-  background-color: navy;
+  background-color: rgb(252, 64, 23);
 }

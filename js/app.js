@@ -17,7 +17,7 @@ $(function () {
       this.board   =  $('div.game-grid');
       this.player  =  $('div.player');
       this.wall    =  $('div.wall');
-      this.brick   =  $('div.brick');
+      this.brick   = $('div.brick');
       // this.takenSlots = [];
       this.ghosts = new Ghosts();
       this.level = new Level();
@@ -49,7 +49,6 @@ $(function () {
           }
         }
       }
-      // console.log(this.gridArr);
     }
 
     // --- GENERATE LEVEL --------------------------- /
@@ -57,11 +56,9 @@ $(function () {
 
       // generate slots
       this.generateLevelSlotsArray();
-
       // randomize brick number (28 to 32)
       let brickNum = Math.round(Math.random() * (32 - 28) + 28);
-
-      // create string od brick divs
+      // create string of brick divs
       let divString = '';
       for ( let i = 0; i < brickNum; i++ ){
         divString += '<div class="brick"></div>';
@@ -70,18 +67,18 @@ $(function () {
       // create elements with jQuery and append them
       $('div.game-grid').append($(divString));
 
-      // making grid slots for player
+      // making 3 grid slots for player
       let freeSlots = this.slots.slice();
-      freeSlots.splice(0, 2);
-      freeSlots.splice(11, 1);
+      freeSlots.splice(0, 2);  // splice two
+      freeSlots.splice(11, 1); // splice one
 
       // randomize x and y for all bricks
       const bricks = $('div.brick');
+
       $.each(bricks, function (i, div) {
         let pos =  Math.round( Math.random() * (freeSlots.length - 1) );
         this.x = freeSlots[pos][0];
         this.y = freeSlots[pos][1];
-
         $(div).css({
           'left': this.x +'px',
           'top': this.y +'px',
@@ -116,10 +113,9 @@ $(function () {
       }
 
       generateGhosts();
-
     }
 
-    // MOVE THE PLAYER ------------------------ /
+    // MOVE THE PLAYER -------------------------- /
     playerMovement() {
       /// store key codes and currently pressed ones
       let keys = {
@@ -132,7 +128,7 @@ $(function () {
       let player = {
         x     :  2,
         y     :  2,
-        speed :  7,
+        speed :  4,
         div   :  $('div.player')
       };
 
@@ -142,17 +138,21 @@ $(function () {
       };
 
       /// player movement update
-      function movePlayer(dirX, dirY){
+      function movePlayer(dirX, dirY) {
         player.x += (dirX || 0) * player.speed;
         player.y += (dirY || 0) * player.speed;
         player.div.css({'left': player.x});
         player.div.css({'top' : player.y});
-      };
+      }
 
-      function wallCollisions() {
-        // wall size = brick size; width = height
-        let x = 0; let y = 0;
 
+      /// player control
+      function detectPlayerMovement() {
+
+        //wall collisions
+        // wall size = brick size // width = height
+        let x = 0;
+        let y = 0;
         const playerSize = parseInt($('div.player').css('width'));
         const objSize = parseInt($('div.wall').css('width'));
 
@@ -172,51 +172,109 @@ $(function () {
           objPos.push([x, y]);
         });
 
-
-        function checkWallCollisions() {
+        function checkCollisionLeft() {
             let playerX = $('div.player').position().left;
             let playerY = $('div.player').position().top;
-            let collision = false;
+            let obstacle = { left  : false };
 
             for ( let i = 0; i < objPos.length; i++ ){
-              if (playerX + playerSize > objPos[i][0] &&
-                  playerX < objPos[i][0] + objSize &&
+              if (playerX - 2 <= objPos[i][0] + objSize &&
+                  playerX + playerSize >= objPos[i][0] + 3 &&
                   playerY + playerSize > objPos[i][1] &&
-                  playerY < objPos[i][1] + objSize)
+                  playerY < objPos[i][1] + objSize
+                  || playerX - 1 <= 0)
               {
-                // collision detected!
-                console.log(true);
+                obstacle.left = true;
                 return true;
               }
             }
         }
 
-        let collisionInterval = setInterval(function () {
-          checkWallCollisions();
-        }, 20);
+        function checkCollisionRight() {
+            let playerX = $('div.player').position().left;
+            let playerY = $('div.player').position().top;
+            let obstacle = { right  : false };
+            for ( let i = 0; i < objPos.length; i++ ){
+              if (playerX + playerSize >= objPos[i][0] &&
+                  playerX <= objPos[i][0] &&
+                  playerY + playerSize > objPos[i][1] &&
+                  playerY < objPos[i][1] + objSize ||
+                  playerX + playerSize >= 520)
+              {
+                obstacle.right = true;
+                return true;
+              }
+            }
+        }
 
-      }
+        function checkCollisionUp() {
+            let playerX = $('div.player').position().left;
+            let playerY = $('div.player').position().top;
+            let obstacle = { up  : false }
+            for ( let i = 0; i < objPos.length; i++ ){
+              if (playerY - 2  <= objPos[i][1] + objSize &&
+                  playerY + playerSize > objPos[i][1] &&
+                  playerX + playerSize - 2 > objPos[i][0] &&
+                  playerX < objPos[i][0] + objSize
+                  || playerY <= 0)
+              {
+                obstacle.up = true;
+                return true;
+              }
+            }
+        }
 
+        function checkCollisionDown() {
+            let playerX = $('div.player').position().left;
+            let playerY = $('div.player').position().top;
+            let obstacle = { down  : false }
+            for ( let i = 0; i < objPos.length; i++ ){
+              if (playerY + playerSize >= objPos[i][1] &&
+                  playerY < objPos[i][1] &&
+                  playerX + playerSize - 2 > objPos[i][0] &&
+                  playerX < objPos[i][0] + objSize
+                  || playerY + playerSize >=520)
+              {
+                obstacle.down = true;
+                return true;
+              }
+            }
+        }
 
-      /// player control
-      function detectPlayerMovement() {
         if ( keys[keys.LEFT] ) {
           // <-- animate here
-          movePlayer(-1, 0);
+          if (checkCollisionLeft()){
+            movePlayer();
+          } else {
+            movePlayer(-1, 0);
+          }
         }
         if ( keys[keys.RIGHT] ) {
           // <-- animate here
-          movePlayer(1, 0);
+          if (checkCollisionRight()){
+            movePlayer();
+          } else {
+            movePlayer(1, 0);
+          }
         }
         if ( keys[keys.UP] ) {
-          // <-- animate
-          movePlayer(0, -1);
+          // <-- animate here
+          if (checkCollisionUp()){
+            movePlayer();
+          } else {
+            movePlayer(0, -1);
+          }
         }
         if ( keys[keys.DOWN] ) {
           // <-- animate here
-          movePlayer(0, 1);
+          if (checkCollisionDown()){
+            movePlayer();
+          } else {
+            movePlayer(0, 1);
+          }
         }
-      };
+
+      }
 
       /// update current position on screen
       movePlayer();
@@ -224,9 +282,10 @@ $(function () {
       /// movement loop
       setInterval(function() {
         detectPlayerMovement();
-      }, 40);
+      }, 20);
 
     } // end of playerMovement() method
+
   } // end of Game() object
 
   let game = new Game();

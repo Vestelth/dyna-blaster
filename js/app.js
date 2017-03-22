@@ -1,11 +1,5 @@
 $(function () {
 
-  class Level {
-  }
-
-  class Ghosts {
-  }
-
   class Game {
     constructor() {
       let self = this;
@@ -17,10 +11,8 @@ $(function () {
       this.board   =  $('div.game-grid');
       this.player  =  $('div.player');
       this.wall    =  $('div.wall');
-      this.brick   = $('div.brick');
-      // this.takenSlots = [];
-      this.ghosts = new Ghosts();
-      this.level = new Level();
+      this.brick   =  $('div.brick');
+      this.range = 1;
     }
 
     // --- FIND BRICK SLOTS ------------------------- /
@@ -65,7 +57,7 @@ $(function () {
       }
 
       // create elements with jQuery and append them
-      $('div.game-grid').append($(divString));
+      this.board.append($(divString));
 
       // making 3 grid slots for player
       let freeSlots = this.slots.slice();
@@ -76,14 +68,14 @@ $(function () {
       const bricks = $('div.brick');
 
       $.each(bricks, function (i, div) {
-        let pos =  Math.round( Math.random() * (freeSlots.length - 1) );
+        let pos =  Math.round(Math.random() * (freeSlots.length - 1));
         this.x = freeSlots[pos][0];
         this.y = freeSlots[pos][1];
         $(div).css({
-          'left': this.x +'px',
-          'top': this.y +'px',
+          'left' : this.x +'px',
+          'top'  : this.y +'px',
         });
-
+        $(div).addClass(this.x + '-' + this.y)
         // remove taken position from free slots
         freeSlots.splice(pos, 1);
       });
@@ -104,15 +96,15 @@ $(function () {
           this.y = freeSlots[pos][1];
           // set x and y position for each ghost
           $(div).css({
-            'top': this.y +'px',
-            'left': this.x +'px',
+            'top': this.y + 2 +'px',
+            'left': this.x + 2 +'px',
           });
           // delete each taken position
           freeSlots.splice(pos, 1);
         });
       }
-
       generateGhosts();
+
     }
 
     // MOVE THE PLAYER -------------------------- /
@@ -144,7 +136,6 @@ $(function () {
         player.div.css({'left': player.x});
         player.div.css({'top' : player.y});
       }
-
 
       /// player control
       function detectPlayerMovement() {
@@ -182,7 +173,7 @@ $(function () {
                   playerX + playerSize >= objPos[i][0] + 3 &&
                   playerY + playerSize > objPos[i][1] &&
                   playerY < objPos[i][1] + objSize
-                  || playerX - 1 <= 0)
+                  || playerX <= 2)
               {
                 obstacle.left = true;
                 return true;
@@ -199,7 +190,7 @@ $(function () {
                   playerX <= objPos[i][0] &&
                   playerY + playerSize > objPos[i][1] &&
                   playerY < objPos[i][1] + objSize ||
-                  playerX + playerSize >= 520)
+                  playerX + playerSize >= 518)
               {
                 obstacle.right = true;
                 return true;
@@ -216,7 +207,7 @@ $(function () {
                   playerY + playerSize > objPos[i][1] &&
                   playerX + playerSize - 2 > objPos[i][0] &&
                   playerX < objPos[i][0] + objSize
-                  || playerY <= 0)
+                  || playerY <= 2)
               {
                 obstacle.up = true;
                 return true;
@@ -233,7 +224,7 @@ $(function () {
                   playerY < objPos[i][1] &&
                   playerX + playerSize - 2 > objPos[i][0] &&
                   playerX < objPos[i][0] + objSize
-                  || playerY + playerSize >=520)
+                  || playerY + playerSize >= 518)
               {
                 obstacle.down = true;
                 return true;
@@ -273,7 +264,6 @@ $(function () {
             movePlayer(0, 1);
           }
         }
-
       }
 
       /// update current position on screen
@@ -282,14 +272,74 @@ $(function () {
       /// movement loop
       setInterval(function() {
         detectPlayerMovement();
-      }, 20);
+      }, 30);
 
     } // end of playerMovement() method
+
+    // LET'S BLOW SOME STUFF UP! ------------------ /
+    setBomb() {
+      const range = this.range;
+      const bricks = $('div.brick');
+      let bombNumber = 0;
+      let bricksPositions = [];
+
+      function brickBurn(x, y) {
+        let fireLeft = $('div.game-grid')
+          .find('div.' + (x - 40) + '-' + y);
+        fireLeft.remove();
+
+        let fireRight = $('div.game-grid')
+          .find('div.' + (x + 40) + '-' + y);
+        fireRight.remove();
+        
+        let fireUp = $('div.game-grid')
+          .find('div.'+ x + '-' + (y + 40));
+        fireUp.remove();
+
+        let fireDown = $('div.game-grid')
+          .find('div.'+ x + '-' + (y - 40));
+        fireDown.remove();
+
+      }
+
+      $(document).on('keydown', function(event) {
+          if (event.which == 32) {
+            event.preventDefault();
+            if (bombNumber === 0){
+              const makeBomb = $('<div class="bomb"></div>')
+              .appendTo($('div#game-grid'));
+              const playerX = $('div.player').position().left;
+              const playerY = $('div.player').position().top;
+              const bombX = Math.round( playerX / 40 ) * 40;
+              const bombY = Math.round( playerY / 40 ) * 40;
+              bombNumber ++;
+
+              $('div.bomb').css({
+                'left': bombX +'px',
+                'top': bombY +'px',
+              });
+
+              let ticker = setTimeout(function() {
+                brickBurn(bombX, bombY);
+
+                let blowTime = setTimeout(function(){
+                  console.log('pole rażenia!');
+                }, 500);
+
+                $('div.bomb').remove();
+                bombNumber = 0;
+              }, 2200);
+
+          }
+        }
+      });
+    }
 
   } // end of Game() object
 
   let game = new Game();
   game.generateLevel();
   game.playerMovement();
+  game.setBomb();
 
 });

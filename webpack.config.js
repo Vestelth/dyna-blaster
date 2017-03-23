@@ -2,7 +2,10 @@
 module.exports = {
   entry: [
     'whatwg-fetch',
-    './js/zadanie01.jsx',
+    './js/jeden.js',
+    './js/dwa.js',
+    './js/trzy.js',
+    './js/app.js',
   ],
   output: {filename: 'js/out.js'},
   devServer: {

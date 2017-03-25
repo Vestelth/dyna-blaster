@@ -100,8 +100,8 @@ $(function () {
           this.y = freeSlots[pos][1];
           // set x and y position for each ghost
           $(div).css({
-            'top': this.y + 2 +'px',
-            'left': this.x + 2 +'px',
+            'top': this.y + 4 +'px',
+            'left': this.x + 4 +'px',
           });
 
           // remove each taken position
@@ -119,6 +119,8 @@ $(function () {
   game.generateLevel();
 
   playerMovement();
+  ghostMovement();
   bombHandler();
+
 
 });

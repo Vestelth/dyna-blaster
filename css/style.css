@@ -33,9 +33,9 @@ div.brick {
 
 div.ghost {
   position: absolute;
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
+  width: 32px;
+  height: 32px;
+  border-radius: 5px;
   background-color: rgb(40, 230, 195);
 }
 
@@ -46,8 +46,8 @@ div.player {
   height: 34px;
   margin-left: -2px;
   margin-top: -2px;
-  padding-bottom: 2px;
   padding-right: 2px;
+  padding-bottom: 2px;
   border-radius: 10px;
   background-color: rgb(252, 64, 23);
 }

@@ -7,10 +7,10 @@ $(function () {
       this.space   =  40;
       this.slots   =  [];
       // this.gridArr =  [];
-      this.board   =  $('div.game-grid');
-      this.wall    =  $('div.wall');
-      this.brick   =  $('div.brick');
-      this.player  =  $('div.player');
+      this.board   =  $('.game-grid');
+      this.wall    =  $('.wall');
+      this.brick   =  $('.brick');
+      this.player  =  $('.player');
     }
 
     // --- FIND BRICK SLOTS ------------------------- /
@@ -42,7 +42,7 @@ $(function () {
           }
         }
       }
-      console.log(this.gridArr);
+      // console.log(this.gridArr);
     }
 
     // --- GENERATE LEVEL --------------------------- /
@@ -55,19 +55,19 @@ $(function () {
       // create string of brick divs
       let divString = '';
       for ( let i = 0; i < brickNum; i++ ){
-        divString += '<div class="brick"></div>';
+        divString += '<div class="brick block"></div>';
       }
 
       // create elements with jQuery and append them
       this.board.append($(divString));
 
-      // making 3 grid slots for player
+      // making 3 free slots for player
       let freeSlots = this.slots.slice();
       freeSlots.splice(0, 2);  // splice two slots
       freeSlots.splice(11, 1); // splice one slot
 
       // randomize x and y for all bricks
-      const bricks = $('div.brick');
+      const bricks = $('.brick');
 
       $.each(bricks, (i, div) => {
         let pos =  Math.round(Math.random() * (freeSlots.length - 1));
@@ -85,14 +85,14 @@ $(function () {
       // GENERATE GHOSTS ------------------------ /
       let generateGhosts = () => {
 
-        // div.ghost elements string
-        let divGhostsString = '<div class="ghost"></div><div class="ghost"></div><div class="ghost"></div><div class="ghost"></div>';
+        // .ghost elements string
+        let divGhostsString = '<div class="ghost mobile"></div><div class="ghost mobile"></div><div class="ghost mobile"></div><div class="ghost mobile"></div>';
 
-        // append div.ghosts
+        // append .ghosts
         this.board.append($(divGhostsString));
 
         // select all ghost divs
-        const ghosts = $('div.ghost');
+        const ghosts = $('.ghost');
         // randomize x and y ghost positions
         $.each(ghosts, function (i, div) {
           let pos =  Math.round( Math.random() * (freeSlots.length - 1) );
@@ -103,7 +103,8 @@ $(function () {
             'top': this.y + 2 +'px',
             'left': this.x + 2 +'px',
           });
-          // delete each taken position
+
+          // remove each taken position
           freeSlots.splice(pos, 1);
         });
       }
@@ -117,7 +118,7 @@ $(function () {
   let game = new Game();
   game.generateLevel();
 
-  bombHandler();
   playerMovement();
+  bombHandler();
 
 });

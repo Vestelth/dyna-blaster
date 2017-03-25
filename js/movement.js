@@ -1,18 +1,18 @@
 // MOVE THE PLAYER -------------------------- /
 let playerMovement = () => {
-  /// store key codes and currently pressed ones
+  // store key codes and currently pressed ones
   let keys = {
     UP    : 38,
     LEFT  : 37,
     RIGHT : 39,
     DOWN  : 40
   };
-  /// store reference to character's position and element
+  // store reference to character's position and element
   let player = {
     x     :  2,
     y     :  2,
     speed :  4,
-    div   :  $('div.player')
+    div   :  $('.player')
   };
 
   /// key detection
@@ -20,7 +20,7 @@ let playerMovement = () => {
     keys[event.which] = event.type == 'keydown';
   };
 
-  /// player movement update
+  // player movement update
   let movePlayer = (dirX, dirY) => {
     player.x += (dirX || 0) * player.speed;
     player.y += (dirY || 0) * player.speed;
@@ -28,34 +28,34 @@ let playerMovement = () => {
     player.div.css({'top' : player.y});
   }
 
-  /// player control
+  // player control
   let detectPlayerMovement = () => {
-    //wall collisions
+    // wall collisions
     // wall size = brick size // width = height
     let x = 0;
     let y = 0;
-    const playerSize = parseInt($('div.player').css('width'));
-    const objSize = parseInt($('div.wall').css('width'));
+    const playerSize = parseInt($('.player').css('width'));
+    const objSize = parseInt($('.wall').css('width'));
 
-    const walls = $('div.wall');
-    const bricks = $('div.brick');
+    const walls = $('.wall');
+    const bricks = $('.brick');
     let objPos = [];
 
     // making an array with all obstacle positions
-    $('div.brick').each( function(index) {
+    $('.brick').each( function(index) {
       x = $(this).position().left ;
       y = $(this).position().top;
       objPos.push([x, y]);
     });
-    $('div.wall').each( function(index) {
+    $('.wall').each( function(index) {
       x = $(this).position().left;
       y = $(this).position().top;
       objPos.push([x, y]);
     });
 
     let checkCollisionLeft = () => {
-        let playerX = $('div.player').position().left;
-        let playerY = $('div.player').position().top;
+        let playerX = $('.player').position().left;
+        let playerY = $('.player').position().top;
         let obstacle = { left  : false };
 
         for ( let i = 0; i < objPos.length; i++ ){
@@ -72,8 +72,8 @@ let playerMovement = () => {
     }
 
     let checkCollisionRight = () => {
-        let playerX = $('div.player').position().left;
-        let playerY = $('div.player').position().top;
+        let playerX = $('.player').position().left;
+        let playerY = $('.player').position().top;
         let obstacle = { right  : false };
         for ( let i = 0; i < objPos.length; i++ ){
           if (playerX + playerSize >= objPos[i][0] &&
@@ -89,8 +89,8 @@ let playerMovement = () => {
     }
 
     let checkCollisionUp = () => {
-        let playerX = $('div.player').position().left;
-        let playerY = $('div.player').position().top;
+        let playerX = $('.player').position().left;
+        let playerY = $('.player').position().top;
         let obstacle = { up  : false }
         for ( let i = 0; i < objPos.length; i++ ){
           if (playerY - 2  <= objPos[i][1] + objSize &&
@@ -106,8 +106,8 @@ let playerMovement = () => {
     }
 
     let checkCollisionDown = () => {
-        let playerX = $('div.player').position().left;
-        let playerY = $('div.player').position().top;
+        let playerX = $('.player').position().left;
+        let playerY = $('.player').position().top;
         let obstacle = { down  : false }
         for ( let i = 0; i < objPos.length; i++ ){
           if (playerY + playerSize >= objPos[i][1] &&

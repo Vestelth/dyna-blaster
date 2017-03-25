@@ -7,12 +7,11 @@ let playerMovement = () => {
     RIGHT : 39,
     DOWN  : 40
   };
-  // store reference to character's position and element
+  // store reference to character's position
   let player = {
     x     :  2,
     y     :  2,
-    speed :  4,
-    div   :  $('.player')
+    speed :  4
   };
 
   /// key detection
@@ -24,8 +23,8 @@ let playerMovement = () => {
   let movePlayer = (dirX, dirY) => {
     player.x += (dirX || 0) * player.speed;
     player.y += (dirY || 0) * player.speed;
-    player.div.css({'left': player.x});
-    player.div.css({'top' : player.y});
+    $('.player').css({'left': player.x});
+    $('.player').css({'top' : player.y});
   }
 
   // player control
@@ -42,13 +41,8 @@ let playerMovement = () => {
     let objPos = [];
 
     // making an array with all obstacle positions
-    $('.brick').each( function(index) {
+    $('.block').each( function(index) {
       x = $(this).position().left ;
-      y = $(this).position().top;
-      objPos.push([x, y]);
-    });
-    $('.wall').each( function(index) {
-      x = $(this).position().left;
       y = $(this).position().top;
       objPos.push([x, y]);
     });

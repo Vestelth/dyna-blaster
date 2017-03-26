@@ -86,7 +86,7 @@ $(function () {
       let generateGhosts = () => {
 
         // .ghost elements string
-        let divGhostsString = '<div class="ghost mobile"></div><div class="ghost mobile"></div><div class="ghost mobile"></div><div class="ghost mobile"></div>';
+        let divGhostsString = '<div class="ghost mobile"></div>';
 
         // append .ghosts
         this.board.append($(divGhostsString));

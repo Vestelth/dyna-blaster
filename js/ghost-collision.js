@@ -123,7 +123,7 @@ let ghostMovement = () => {
     ghost.css({'top' : gY });
   }
 
-  // let time = setInterval(function () {
+  let time = setInterval(function () {
     $('.ghost').each( function(index) {
       let thisGhost = $(this);
       let ghostX = $(this).position().left;
@@ -187,6 +187,6 @@ let ghostMovement = () => {
 
     });
 
-  // }, 200);
+  }, 200);
 
 }

@@ -107,7 +107,7 @@ let ghostMovement = () => {
             gY < obj2Pos[i][1] &&
             gX + ghostSize > obj2Pos[i][0] &&
             gX < obj2Pos[i][0] + blockSize
-            || gY + ghostSize >= 518)
+            || gY + ghostSize >= 516)
         {
           return true;
         }

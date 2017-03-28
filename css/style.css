@@ -41,8 +41,8 @@ div.ghost {
   position: absolute;
   width: 34px;
   height: 34px;
-  background-color: rgb(40, 230, 195);
-  margin-right: 1px;
+  background-image: url('../img/ryuk.png');
+  background-size: 400% ;
 }
 
 div.player {
@@ -53,7 +53,8 @@ div.player {
   margin-top: -2px;
   margin-left: -2px;
   padding-right: 2px;
-  background-color: rgb(252, 64, 23);
+  background-image: url('../img/player.png');
+  background-size: 1480%;
 }
 
 div.bomb {
@@ -67,6 +68,15 @@ div.bomb {
 }
 
 @keyframes bombSet {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 120px 0;
+    }
+}
+
+@keyframes ghost {
     0% {
         background-position: 0 0;
     }

@@ -33,9 +33,9 @@ let playerMovement = () => {
     // wall size = brick size // width = height
     let x = 0;
     let y = 0;
+
     const playerSize = parseInt($('.player').css('width'));
     const objSize = parseInt($('.wall').css('width'));
-
     const walls = $('.wall');
     const bricks = $('.brick');
     let objPos = [];

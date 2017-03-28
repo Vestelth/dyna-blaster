@@ -95,7 +95,6 @@ var bombHandler = function bombHandler() {
             // create bomb TO.DO: make 'limit' instead of a 0
             if (bombNumber === 0) {
                 var makeBomb = $('<div class="bomb"></div>').appendTo($('.game-grid'));
-                console.log('bomb set!');
                 $('.bomb').css({
                     'left': bombX + 'px',
                     'top': bombY + 'px'
@@ -124,21 +123,20 @@ var bombHandler = function bombHandler() {
     var brickBurn = function brickBurn(x, y) {
 
         var fireLeft = $('.game-grid').find('.' + (x - 40) + '-' + y);
-        fireLeft.remove();
+        fireLeft.fadeOut(400);
 
         var fireRight = $('.game-grid').find('.' + (x + 40) + '-' + y);
-        fireRight.remove();
+        fireRight.fadeOut(400);
 
         var fireUp = $('.game-grid').find('.' + x + '-' + (y + 40));
-        fireUp.remove();
+        fireUp.fadeOut(400);
 
         var fireDown = $('.game-grid').find('.' + x + '-' + (y - 40));
-        fireDown.remove();
+        fireDown.fadeOut(400);
     };
 
     var bombCharDamage = function bombCharDamage(bX, bY) {
-        // let damageTime = setInterval( () => {
-        // bomb damages each char close to it
+
         $('.mobile').each(function (index) {
             var charX = $(this).position().left;
             var charY = $(this).position().top;
@@ -146,20 +144,11 @@ var bombHandler = function bombHandler() {
             var bombSize = parseInt($('.bomb').css('width'));
 
             if (charX + charSize > bX - range * 40 && charX < bX + bombSize + range * 40 && charY + charSize > bY && charY < bY + bombSize) {
-                console.log('removing X');
                 $(this).fadeOut(300);
             } else if (charY + charSize > bY - range * 40 && charY < bY + bombSize + range * 40 && charX + charSize > bX && charX < bX + bombSize) {
                 $(this).fadeOut(300);
-                console.log('removing Y');
             }
         });
-        // }, 20);
-
-        // let myDamageTimeout = setTimeout( () => {
-        //   console.log('clear interval set');
-        //   clearInterval(damageTime);
-        //   console.log('interval cleared');
-        // }, 600);
     };
     return true;
 }; // end of bombHandler
@@ -209,6 +198,14 @@ var ghostMovement = function ghostMovement() {
     var y = $(this).position().top;
     obj2Pos.push([x, y]);
   });
+
+  setInterval(function () {
+    if ($('.bomb').length != 0) {
+      var bX = $('.bomb').position().left;
+      var bY = $('.bomb').position().top;
+      obj2Pos.push([bX, bY]);
+    }
+  }, 200);
 
   $(document).on('keydown', function (event) {
     if (event.which == 32) {
@@ -399,9 +396,9 @@ var playerMovement = function playerMovement() {
     // wall size = brick size // width = height
     var x = 0;
     var y = 0;
+
     var playerSize = parseInt($('.player').css('width'));
     var objSize = parseInt($('.wall').css('width'));
-
     var walls = $('.wall');
     var bricks = $('.brick');
     var objPos = [];

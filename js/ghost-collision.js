@@ -42,6 +42,14 @@
         obj2Pos.push([x, y]);
     });
 
+    setInterval(function () {
+      if ($('.bomb').length != 0) {
+        let bX = $('.bomb').position().left;
+        let bY = $('.bomb').position().top;
+        obj2Pos.push([bX, bY]);
+      }
+    }, 200);
+
     $(document).on('keydown', function(event) {
         if (event.which == 32) {
           event.preventDefault();

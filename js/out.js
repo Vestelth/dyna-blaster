@@ -123,16 +123,16 @@ var bombHandler = function bombHandler() {
     var brickBurn = function brickBurn(x, y) {
 
         var fireLeft = $('.game-grid').find('.' + (x - 40) + '-' + y);
-        fireLeft.fadeOut(400);
+        fireLeft.fadeOut(300);
 
         var fireRight = $('.game-grid').find('.' + (x + 40) + '-' + y);
-        fireRight.fadeOut(400);
+        fireRight.fadeOut(300);
 
         var fireUp = $('.game-grid').find('.' + x + '-' + (y + 40));
-        fireUp.fadeOut(400);
+        fireUp.fadeOut(300);
 
         var fireDown = $('.game-grid').find('.' + x + '-' + (y - 40));
-        fireDown.fadeOut(400);
+        fireDown.fadeOut(300);
     };
 
     // bomb hurts moving characters
@@ -222,7 +222,7 @@ var ghostMovement = function ghostMovement() {
           var y = $(this).position().top;
           obj2Pos.push([x, y]);
         });
-      }, 2500);
+      }, 2810);
     }
   });
 
@@ -519,6 +519,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var playerMovement = __webpack_require__(2);
 var bombHandler = __webpack_require__(0);
 var ghostMovement = __webpack_require__(1);
+var powerUp = __webpack_require__(5);
 
 $(function () {
   var Game = function () {
@@ -529,7 +530,6 @@ $(function () {
       this.y = 0;
       this.space = 40;
       this.slots = [];
-      // this.gridArr =  [];
       this.board = $('.game-grid');
       this.wall = $('.wall');
       this.brick = $('.brick');
@@ -547,7 +547,6 @@ $(function () {
         var counter = 0;
 
         for (var i = 0; i < 13; i++) {
-          // this.gridArr.push([]);
           for (var j = 0; j < 13; j++) {
             if (i % 2 != 0 && j % 2 != 0) {
               this.y = i * this.space;
@@ -557,19 +556,14 @@ $(function () {
                 'top': this.y + 'px'
               });
               counter++;
-              // making array of object on the board
-              // 1 - there's a wall
-              // 0 - there's nothing
-              // this.gridArr[i].push(1);
+              // making array of object on the board;
             } else {
-              // this.gridArr[i].push(0);
               this.y = i * this.space;
               this.x = j * this.space;
               this.slots.push([this.x, this.y]);
             }
           }
         }
-        // console.log(this.gridArr);
       }
 
       // --- GENERATE LEVEL --------------------------- /
@@ -627,7 +621,6 @@ $(function () {
           // randomize x and y ghost positions
           $.each(ghosts, function (i, div) {
             var pos = Math.round(Math.random() * (freeSlots.length - 1));
-            $(this).data('dir', '');
             this.x = freeSlots[pos][0];
             this.y = freeSlots[pos][1];
             // set x and y position for each ghost
@@ -640,14 +633,8 @@ $(function () {
             freeSlots.splice(pos, 1);
           });
         };
-
         generateGhosts();
       }
-
-      // let gameOver = setInterval {
-      //
-      // }
-
     }]);
 
     return Game;
@@ -658,13 +645,16 @@ $(function () {
       $('div.menu').fadeOut(800);
       setTimeout(function () {
         var game = new Game();
+
         game.generateLevel();
         playerMovement();
         ghostMovement();
         bombHandler();
+        powerUp();
       }, 300);
     });
   };
+
   startGame();
 });
 
@@ -677,6 +667,12 @@ __webpack_require__(2);
 __webpack_require__(1);
 module.exports = __webpack_require__(3);
 
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+throw new Error("Module build failed: SyntaxError: Unterminated string constant (1:3)\n\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 1 | \u001b[39m\u001b[33mLET\u001b[39m\u001b[32m'S BUFF THIS GUY, HUH?\u001b[39m\n \u001b[90m   | \u001b[39m   \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 2 | \u001b[39m\n \u001b[90m 3 | \u001b[39mlet powerUp \u001b[33m=\u001b[39m () \u001b[33m=>\u001b[39m {\n \u001b[90m 4 | \u001b[39m  let power \u001b[33m=\u001b[39m $(\u001b[32m'<div class=\"powerup\"></div>'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n");
 
 /***/ })
 /******/ ]);

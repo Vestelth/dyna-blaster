@@ -63,7 +63,7 @@
                 let y = $(this).position().top;
                 obj2Pos.push([x, y]);
             });
-          }, 2500);
+          }, 2810);
         }
     });
 

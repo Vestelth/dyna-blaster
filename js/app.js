@@ -1,6 +1,7 @@
 let playerMovement = require("./movement.js");
 let bombHandler = require("./bomb.js");
 let ghostMovement = require("./ghost-collision.js");
+let powerUp = require("./powerup.js")
 
 $(function () {
 
@@ -10,7 +11,6 @@ $(function () {
       this.y = 0;
       this.space   =  40;
       this.slots   =  [];
-      // this.gridArr =  [];
       this.board   =  $('.game-grid');
       this.wall    =  $('.wall');
       this.brick   =  $('.brick');
@@ -24,7 +24,6 @@ $(function () {
       let counter = 0;
 
       for( let i = 0; i < 13; i++ ){
-        // this.gridArr.push([]);
         for( let j = 0; j < 13; j++ ){
           if ( i % 2 != 0 && j % 2 != 0 ){
             this.y = i * this.space;
@@ -34,19 +33,14 @@ $(function () {
               'top': this.y +'px',
             });
             counter ++;
-            // making array of object on the board
-            // 1 - there's a wall
-            // 0 - there's nothing
-            // this.gridArr[i].push(1);
+            // making array of object on the board;
           } else {
-            // this.gridArr[i].push(0);
             this.y = i * this.space;
             this.x = j * this.space;
             this.slots.push([this.x, this.y]);
           }
         }
       }
-      // console.log(this.gridArr);
     }
 
     // --- GENERATE LEVEL --------------------------- /
@@ -100,7 +94,6 @@ $(function () {
         // randomize x and y ghost positions
         $.each(ghosts, function (i, div) {
           let pos =  Math.round( Math.random() * (freeSlots.length - 1) );
-          $(this).data('dir','')
           this.x = freeSlots[pos][0];
           this.y = freeSlots[pos][1];
           // set x and y position for each ghost
@@ -113,13 +106,8 @@ $(function () {
           freeSlots.splice(pos, 1);
         });
       }
-
       generateGhosts();
     }
-
-    // let gameOver = setInterval {
-    //
-    // }
 
   } // end of Game() object
 
@@ -128,13 +116,17 @@ $(function () {
       $('div.menu').fadeOut(800);
       setTimeout(function () {
         let game = new Game();
+
         game.generateLevel();
         playerMovement();
         ghostMovement();
         bombHandler();
+        powerUp();
+
       }, 300);
     });
   }
+
   startGame();
 
 });

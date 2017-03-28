@@ -38,6 +38,9 @@ div.menu {
   flex-direction: column;
 }
 
+div.menu {
+  padding-top: 7.4em;
+}
 div.menu h1.title {
   font-family: 'Macondo', serif;
   font-size: 4.2em;
@@ -58,6 +61,13 @@ div.menu h2.start {
   margin-top: 2em;
   cursor: pointer;
   animation: start 2s infinite;
+  margin-bottom: 10em;
+}
+
+div.menu p {
+  font-family: 'VT323', arial;
+  font-size: 1.8em;
+  flex-flow: wrap;
 }
 
 h2.start:hover{
@@ -119,6 +129,25 @@ div.bomb {
   background-image: url('../img/bomb.png');
   background-size: cover;
   animation: bombSet 0.7s steps(3) infinite;
+}
+
+div.powerup {
+  position: absolute;
+  z-index: -1;
+  animation: power 0.5s steps(2) infinite;
+  background-size: cover;
+  width: 40px;
+  height: 40px;
+}
+
+@keyframes power {
+  0%{
+    background-image: url('../img/powerup.gif');
+  }
+  100%{
+    background-image: url('../img/powerup1.gif');
+
+  }
 }
 
 @keyframes bombSet {

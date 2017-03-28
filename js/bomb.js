@@ -50,16 +50,16 @@ let bombHandler = () => {
     let brickBurn = (x, y) => {
 
       let fireLeft = $('.game-grid').find('.' + (x - 40) + '-' + y);
-      fireLeft.fadeOut(400);
+      fireLeft.fadeOut(300);
 
       let fireRight = $('.game-grid').find('.' + (x + 40) + '-' + y);
-      fireRight.fadeOut(400);
+      fireRight.fadeOut(300);
 
       let fireUp = $('.game-grid').find('.' + x + '-' + (y + 40));
-      fireUp.fadeOut(400);
+      fireUp.fadeOut(300);
 
       let fireDown = $('.game-grid').find('.'+ x + '-' + (y - 40));
-      fireDown.fadeOut(400);
+      fireDown.fadeOut(300);
     }
 
     // bomb hurts moving characters
@@ -84,7 +84,7 @@ let bombHandler = () => {
           {
 
               $(this).fadeOut(300);
-              
+
           }
         });
     }

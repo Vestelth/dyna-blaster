@@ -51,7 +51,7 @@ let playerMovement = () => {
     let checkCollisionLeft = () => {
         let playerX = $('.player').position().left;
         let playerY = $('.player').position().top;
-        let obstacle = { left  : false };
+        let obstacle = { left : false };
 
         for ( let i = 0; i < objPos.length; i++ ){
           if (playerX - 4 <= objPos[i][0] + objSize &&
@@ -69,7 +69,7 @@ let playerMovement = () => {
     let checkCollisionRight = () => {
         let playerX = $('.player').position().left;
         let playerY = $('.player').position().top;
-        let obstacle = { right  : false };
+        let obstacle = { right : false };
         for ( let i = 0; i < objPos.length; i++ ){
           if (playerX + playerSize + 2 >= objPos[i][0] &&
               playerX <= objPos[i][0] &&
@@ -86,7 +86,7 @@ let playerMovement = () => {
     let checkCollisionUp = () => {
         let playerX = $('.player').position().left;
         let playerY = $('.player').position().top;
-        let obstacle = { up  : false }
+        let obstacle = { up : false }
         for ( let i = 0; i < objPos.length; i++ ){
           if (playerY - 4  <= objPos[i][1] + objSize &&
               playerY + playerSize > objPos[i][1] &&
@@ -103,7 +103,7 @@ let playerMovement = () => {
     let checkCollisionDown = () => {
         let playerX = $('.player').position().left;
         let playerY = $('.player').position().top;
-        let obstacle = { down  : false }
+        let obstacle = { down : false }
         for ( let i = 0; i < objPos.length; i++ ){
           if (playerY + playerSize + 2 >= objPos[i][1] &&
               playerY < objPos[i][1] &&

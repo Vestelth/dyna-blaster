@@ -38,7 +38,7 @@ let bombHandler = () => {
 
                   bombNumber --;
 
-              }, 2000);
+              }, 2500);
             }
             tickerStart(bombX, bombY);
             bombNumber ++;
@@ -62,8 +62,8 @@ let bombHandler = () => {
       fireDown.fadeOut(400);
     }
 
+    // bomb hurts moving characters
     let bombCharDamage = (bX, bY) => {
-
         $('.mobile').each( function(index) {
           let charX = $(this).position().left;
           let charY = $(this).position().top;
@@ -74,13 +74,17 @@ let bombHandler = () => {
               charX < bX + bombSize + (range * 40) &&
               charY + charSize > bY && charY < bY + bombSize)
           {
+
               $(this).fadeOut(300);
+
           } else if
              (charY + charSize > bY - (range * 40) &&
               charY < bY + bombSize + (range * 40) &&
               charX + charSize > bX && charX < bX + bombSize)
           {
+
               $(this).fadeOut(300);
+              
           }
         });
     }

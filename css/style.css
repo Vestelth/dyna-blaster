@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Macondo|Revalia');
+@import url('https://fonts.googleapis.com/css?family=Macondo|Revalia|VT323');
 
 * {
   margin: 0;
@@ -40,12 +40,12 @@ div.menu {
 
 div.menu h1.title {
   font-family: 'Macondo', serif;
-  font-size: 4.5em;
-  color: rgb(251, 255, 48)
+  font-size: 4.2em;
+  color: rgb(240, 223, 0);
 }
 
 div.menu h1.title span {
-  color: rgb(207, 46, 3)
+  color: rgb(233, 42, 0)
 }
 
 div.menu h3 {
@@ -57,12 +57,17 @@ div.menu h3 {
 div.menu h2.start {
   margin-top: 2em;
   cursor: pointer;
+  animation: start 2s infinite;
 }
 
 h2.start:hover{
-  color: rgb(251, 255, 48);
+  color: rgb(240, 223, 0);
   transform: scale(1.2);
   cursor: hand;
+}
+
+div.game-over {
+  visibility: hidden;
 }
 
 div.wall {
@@ -123,6 +128,18 @@ div.bomb {
     100% {
         background-position: 120px 0;
     }
+}
+
+@keyframes start {
+  0% {
+    transform: scale(1.00);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1.00);
+  }
 }
 
 /*@keyframes playerDown {

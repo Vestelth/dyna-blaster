@@ -30,7 +30,7 @@ let playerMovement = () => {
   // player control
   let detectPlayerMovement = () => {
     // wall collisions
-    // wall size = brick size // width = height
+    // wall size=brick size,width = height
     let x = 0;
     let y = 0;
 

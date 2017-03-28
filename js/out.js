@@ -111,7 +111,7 @@ var bombHandler = function bombHandler() {
                         $('.bomb').remove();
 
                         bombNumber--;
-                    }, 2000);
+                    }, 2500);
                 };
                 tickerStart(bombX, bombY);
                 bombNumber++;
@@ -135,8 +135,8 @@ var bombHandler = function bombHandler() {
         fireDown.fadeOut(400);
     };
 
+    // bomb hurts moving characters
     var bombCharDamage = function bombCharDamage(bX, bY) {
-
         $('.mobile').each(function (index) {
             var charX = $(this).position().left;
             var charY = $(this).position().top;
@@ -144,8 +144,10 @@ var bombHandler = function bombHandler() {
             var bombSize = parseInt($('.bomb').css('width'));
 
             if (charX + charSize > bX - range * 40 && charX < bX + bombSize + range * 40 && charY + charSize > bY && charY < bY + bombSize) {
+
                 $(this).fadeOut(300);
             } else if (charY + charSize > bY - range * 40 && charY < bY + bombSize + range * 40 && charX + charSize > bX && charX < bX + bombSize) {
+
                 $(this).fadeOut(300);
             }
         });
@@ -163,8 +165,6 @@ module.exports = bombHandler;
 
 // GHOST MOVEMENT ------------------ /
 
-// let ghostBehaviour = () => {
-
 var ghostEatsPlayer = function ghostEatsPlayer() {
 
   var playerX = $('.player').position().left;
@@ -179,12 +179,13 @@ var ghostEatsPlayer = function ghostEatsPlayer() {
     if (ghostX < playerX + playerSize && ghostX + ghostSize > playerX && ghostY < playerY + playerSize && ghostY + ghostSize > playerY) {
       //TODO: game over, restart and -1 life;
       $('.player').fadeOut(300);
+      // gameOver();
     }
   });
 };
 
 var ghostMovement = function ghostMovement() {
-
+  // checks if ghost eats player
   var ghostPlayerTicker = setInterval(function () {
     ghostEatsPlayer();
   }, 20);
@@ -202,6 +203,7 @@ var ghostMovement = function ghostMovement() {
     obj2Pos.push([x, y]);
   });
 
+  // make bomb block ghost pathway
   $(document).on('keydown', function (event) {
     if (event.which == 32) {
       event.preventDefault();
@@ -224,8 +226,7 @@ var ghostMovement = function ghostMovement() {
     }
   });
 
-  //making an array with all obstacle positions
-
+  // checking ghost collisions w/obstacles
   var checkCollRight = function checkCollRight(ghost) {
     var gX = ghost.position().left;
     var gY = ghost.position().top;
@@ -267,7 +268,7 @@ var ghostMovement = function ghostMovement() {
       }
     }
   };
-
+  // ghost moving function
   var moveGhost = function moveGhost(dirX, dirY, ghost) {
     var gX = ghost.position().left;
     var gY = ghost.position().top;
@@ -277,6 +278,7 @@ var ghostMovement = function ghostMovement() {
     ghost.css({ 'top': gY });
   };
 
+  // ghost 'AI' - pathfinding
   $('.ghost').each(function (index) {
     var thisGhost = $(this);
     var direction = {
@@ -335,19 +337,15 @@ var ghostMovement = function ghostMovement() {
         switch (possibleDir[newDir]) {
           case 'left':
             direction.left = true;
-            // moveGhost(-1, 0, thisGhost);
             break;
           case 'right':
             direction.right = true;
-            // moveGhost(1, 0, thisGhost);
             break;
           case 'up':
             direction.up = true;
-            // moveGhost(0, -1, thisGhost);
             break;
           case 'down':
             direction.down = true;
-            // moveGhost(0, 1, thisGhost);
             break;
         }
       }
@@ -396,7 +394,7 @@ var playerMovement = function playerMovement() {
   // player control
   var detectPlayerMovement = function detectPlayerMovement() {
     // wall collisions
-    // wall size = brick size // width = height
+    // wall size=brick size,width = height
     var x = 0;
     var y = 0;
 
@@ -646,7 +644,7 @@ $(function () {
         generateGhosts();
       }
 
-      // let gameOver = () => {
+      // let gameOver = setInterval {
       //
       // }
 

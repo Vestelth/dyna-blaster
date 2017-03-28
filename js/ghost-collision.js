@@ -1,7 +1,5 @@
 // GHOST MOVEMENT ------------------ /
 
-// let ghostBehaviour = () => {
-
   let ghostEatsPlayer = () => {
 
     let playerX = $('.player').position().left;
@@ -20,14 +18,13 @@
       {
           //TODO: game over, restart and -1 life;
           $('.player').fadeOut(300);
+          // gameOver();
       }
     });
-
   }
 
-
   let ghostMovement = () => {
-
+    // checks if ghost eats player
     let ghostPlayerTicker = setInterval(function () {
       ghostEatsPlayer();
     }, 20);
@@ -45,6 +42,7 @@
         obj2Pos.push([x, y]);
     });
 
+    // make bomb block ghost pathway
     $(document).on('keydown', function(event) {
         if (event.which == 32) {
           event.preventDefault();
@@ -69,8 +67,7 @@
         }
     });
 
-    //making an array with all obstacle positions
-
+    // checking ghost collisions w/obstacles
     let checkCollRight = (ghost) => {
         let gX = ghost.position().left;
         let gY = ghost.position().top;
@@ -132,7 +129,7 @@
           }
         }
     }
-
+    // ghost moving function
     let moveGhost = (dirX, dirY, ghost) => {
       let gX = ghost.position().left;
       let gY = ghost.position().top;
@@ -142,6 +139,7 @@
       ghost.css({'top' : gY });
     }
 
+    // ghost 'AI' - pathfinding
     $('.ghost').each(function(index) {
       let thisGhost = $(this);
       let direction = {
@@ -202,19 +200,15 @@
           switch(possibleDir[newDir]) {
             case 'left':
               direction.left = true;
-              // moveGhost(-1, 0, thisGhost);
               break;
             case 'right':
               direction.right = true;
-              // moveGhost(1, 0, thisGhost);
               break;
             case 'up':
               direction.up = true;
-              // moveGhost(0, -1, thisGhost);
               break;
             case 'down':
               direction.down = true;
-              // moveGhost(0, 1, thisGhost);
               break;
           }
         }

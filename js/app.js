@@ -117,7 +117,7 @@ $(function () {
       generateGhosts();
     }
 
-    // let gameOver = () => {
+    // let gameOver = setInterval {
     //
     // }
 

@@ -222,7 +222,7 @@ var ghostMovement = function ghostMovement() {
           var y = $(this).position().top;
           obj2Pos.push([x, y]);
         });
-      }, 2810);
+      }, 2850);
     }
   });
 
@@ -670,9 +670,30 @@ module.exports = __webpack_require__(3);
 
 /***/ }),
 /* 5 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-throw new Error("Module build failed: SyntaxError: Unterminated string constant (1:3)\n\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 1 | \u001b[39m\u001b[33mLET\u001b[39m\u001b[32m'S BUFF THIS GUY, HUH?\u001b[39m\n \u001b[90m   | \u001b[39m   \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 2 | \u001b[39m\n \u001b[90m 3 | \u001b[39mlet powerUp \u001b[33m=\u001b[39m () \u001b[33m=>\u001b[39m {\n \u001b[90m 4 | \u001b[39m  let power \u001b[33m=\u001b[39m $(\u001b[32m'<div class=\"powerup\"></div>'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n");
+"use strict";
+
+
+//LET'S BUFF THIS GUY, HUH?
+
+var powerUp = function powerUp() {
+  var power = $('<div class="powerup"></div>');
+  $('div.game-grid').append(power);
+
+  var place = Math.round(Math.random() * ($('.brick').length - 1));
+  console.log(place);
+  var powX = Math.round($('.brick').eq(place).position().left);
+  var powY = Math.round($('.brick').eq(place).position().top);
+  console.log(powX, powY);
+  console.log(power);
+  $('.powerup').css({ 'left': powX });
+  $('.powerup').css({ 'top': powY });
+
+  console.log(power.css('left'));
+};
+
+module.exports = powerUp;
 
 /***/ })
 /******/ ]);

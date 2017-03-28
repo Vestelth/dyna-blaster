@@ -1,4 +1,4 @@
-LET'S BUFF THIS GUY, HUH?
+//LET'S BUFF THIS GUY, HUH?
 
 let powerUp = () => {
   let power = $('<div class="powerup"></div>');

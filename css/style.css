@@ -4,12 +4,16 @@
   box-sizing: padding-box;
 }
 
+body {
+  background-color: rgb(0, 9, 38);
+}
+
 div.game-grid {
   width: 520px;
   height: 520px;
   margin: 25px auto;
-  background-color: rgb(115, 200, 50);
-  border: 5px solid green;
+  background-image: url('../img/grass.png');
+  border: 5px solid rgb(22, 25, 47);
   position: relative;
 }
 
@@ -18,7 +22,8 @@ div.wall {
   width: 40px;
   height: 40px;
   border-radius: 2px;
-  background-color: rgb(65, 65, 65);
+  background-image: url('../img/wall.png');
+  background-size: cover;
 }
 
 div.brick {
@@ -27,8 +32,8 @@ div.brick {
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  border: 1px solid rgb(43, 31, 7);
-  background-color: rgb(156, 91, 14);
+  background-image: url('../img/brick2.png');
+  box-shadow: 2px 1px 1px 0px rgba(0,0,0,0.75);
 }
 
 div.ghost {

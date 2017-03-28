@@ -27,27 +27,40 @@ let ghostPlayerTicker = setInterval(function () {
   ghostEatsPlayer();
 }, 20);
 
-let ghostMovement = () => {
+let ghostMovement = (callback) => {
 
   const ghostSize = parseInt($('.ghost').css('width'));
   const blockSize = parseInt($('.wall').css('width'));
   const ghostDiv = $('.ghost');
+  obj2Pos = [];
+  $('.block').each( function(index) {
+      x = $(this).position().left;
+      y = $(this).position().top;
+      obj2Pos.push([x, y]);
+  });
 
-  let obj2Pos = [];
+  $(document).on('keydown', function(event) {
+      if (event.which == 32) {
+        event.preventDefault();
+        setTimeout(function () {
+          obj2Pos =[];
+          $('.block').each( function(index) {
+              x = $(this).position().left;
+              y = $(this).position().top;
+              obj2Pos.push([x, y]);
+          });
+        }, 2000);
+      }
+  });
 
   //making an array with all obstacle positions
-  $('.block').each( function(index) {
-    x = $(this).position().left ;
-    y = $(this).position().top;
-    obj2Pos.push([x, y]);
-  });
 
   let checkCollRight = (ghost) => {
       let gX = ghost.position().left;
       let gY = ghost.position().top;
 
       for (let i = 0; i < obj2Pos.length; i++){
-        if (gX + ghostSize + 2 >= obj2Pos[i][0] &&
+        if (gX + ghostSize + 4 >= obj2Pos[i][0] &&
             gX < obj2Pos[i][0] &&
             gY + ghostSize + 1 >= obj2Pos[i][1] &&
             gY - 1 <= obj2Pos[i][1] + blockSize ||
@@ -189,7 +202,7 @@ let ghostMovement = () => {
             break;
         }
       }
-  }, 60);
+  }, 40);
 
 
 

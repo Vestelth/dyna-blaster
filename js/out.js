@@ -220,7 +220,7 @@ var ghostMovement = function ghostMovement() {
           var y = $(this).position().top;
           obj2Pos.push([x, y]);
         });
-      }, 4000);
+      }, 2500);
     }
   });
 
@@ -402,6 +402,7 @@ var playerMovement = function playerMovement() {
 
     var playerSize = parseInt($('.player').css('width'));
     var objSize = parseInt($('.wall').css('width'));
+
     var walls = $('.wall');
     var bricks = $('.brick');
     var objPos = [];
@@ -644,18 +645,29 @@ $(function () {
 
         generateGhosts();
       }
+
+      // let gameOver = () => {
+      //
+      // }
+
     }]);
 
     return Game;
   }(); // end of Game() object
 
-
-  var game = new Game();
-  game.generateLevel();
-
-  playerMovement();
-  ghostMovement();
-  bombHandler();
+  var startGame = function startGame() {
+    $('h2.start').on('click', function () {
+      $('div.menu').fadeOut(800);
+      setTimeout(function () {
+        var game = new Game();
+        game.generateLevel();
+        playerMovement();
+        ghostMovement();
+        bombHandler();
+      }, 300);
+    });
+  };
+  startGame();
 });
 
 /***/ }),

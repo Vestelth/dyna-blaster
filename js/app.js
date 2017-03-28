@@ -115,17 +115,26 @@ $(function () {
       }
 
       generateGhosts();
-
     }
+
+    // let gameOver = () => {
+    //
+    // }
+
   } // end of Game() object
 
-
-  let game = new Game();
-  game.generateLevel();
-
-  playerMovement();
-  ghostMovement();
-  bombHandler();
-
+  let startGame = () => {
+    $('h2.start').on('click', function(){
+      $('div.menu').fadeOut(800);
+      setTimeout(function () {
+        let game = new Game();
+        game.generateLevel();
+        playerMovement();
+        ghostMovement();
+        bombHandler();
+      }, 300);
+    });
+  }
+  startGame();
 
 });

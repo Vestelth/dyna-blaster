@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Macondo|Revalia');
+
 * {
   margin: 0;
   padding: 0;
@@ -5,6 +7,7 @@
 }
 
 body {
+  font-size: 10px;
   background-color: rgb(0, 9, 38);
 }
 
@@ -12,9 +15,54 @@ div.game-grid {
   width: 520px;
   height: 520px;
   margin: 25px auto;
+  overflow: hidden;
   background-image: url('../img/grass.png');
   border: 5px solid rgb(22, 25, 47);
   position: relative;
+}
+
+div.menu {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  z-index: 6;
+  color: #FFFFFF;
+  font-family: 'Revalia', arialx;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+div.menu h1.title {
+  font-family: 'Macondo', serif;
+  font-size: 4.5em;
+  color: rgb(251, 255, 48)
+}
+
+div.menu h1.title span {
+  color: rgb(207, 46, 3)
+}
+
+div.menu h3 {
+  font-size: 1.6em;
+  margin-top: -0.4em;
+  margin-bottom: 0.8em;
+}
+
+div.menu h2.start {
+  margin-top: 2em;
+  cursor: pointer;
+}
+
+h2.start:hover{
+  color: rgb(251, 255, 48);
+  transform: scale(1.2);
+  cursor: hand;
 }
 
 div.wall {
@@ -43,7 +91,6 @@ div.ghost {
   height: 34px;
   background-image: url('../img/nuwalk.gif');
   background-size: cover;
-  /*animation: ghost 1.4s infinite;*/
 }
 
 div.player {
@@ -53,9 +100,10 @@ div.player {
   height: 36px;
   margin-top: -2px;
   margin-left: -2px;
-  padding-right: 2px;
-  background-image: url('../img/player.png');
-  background-size: 1490%;
+  background-image: url('../img/ludek.png');
+  background-size: cover;
+  background-position: 1px 0px;
+  background-size: 95%;
 }
 
 div.bomb {
@@ -74,21 +122,6 @@ div.bomb {
     }
     100% {
         background-position: 120px 0;
-    }
-}
-
-@keyframes ghost {
-    0% {
-        background-size: 95%;
-    }
-    33% {
-        background-size: 105%;
-    }
-    67% {
-        background-size: 110%;
-    }
-    100% {
-        background-size: 100%;
     }
 }
 

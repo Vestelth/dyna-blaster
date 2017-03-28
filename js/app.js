@@ -96,12 +96,13 @@ $(function () {
         // randomize x and y ghost positions
         $.each(ghosts, function (i, div) {
           let pos =  Math.round( Math.random() * (freeSlots.length - 1) );
+          $(this).data('dir','')
           this.x = freeSlots[pos][0];
           this.y = freeSlots[pos][1];
           // set x and y position for each ghost
           $(div).css({
-            'top': this.y + 4 +'px',
-            'left': this.x + 4 +'px',
+            'left': this.x + 3 +'px',
+            'top': this.y + 3 +'px',
           });
 
           // remove each taken position

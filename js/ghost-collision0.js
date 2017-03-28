@@ -34,6 +34,7 @@ let ghostMovement = () => {
   const ghostDiv = $('.ghost');
 
   let obj2Pos = [];
+  // let ghostSpeed = 1;
 
   //making an array with all obstacle positions
   $('.block').each( function(index) {
@@ -47,11 +48,11 @@ let ghostMovement = () => {
       let gY = ghost.position().top;
 
       for (let i = 0; i < obj2Pos.length; i++){
-        if (gX + ghostSize + 2 >= obj2Pos[i][0] &&
+        if (gX + ghostSize + 4 >= obj2Pos[i][0] &&
             gX < obj2Pos[i][0] &&
             gY + ghostSize + 1 >= obj2Pos[i][1] &&
             gY - 1 <= obj2Pos[i][1] + blockSize ||
-            gX + ghostSize >= 516)
+            gX + ghostSize >= 518)
         {
           return true;
         }
@@ -63,11 +64,11 @@ let ghostMovement = () => {
       let gY = ghost.position().top;
 
       for (let i = 0; i < obj2Pos.length; i++){
-        if (gX - 3 <= obj2Pos[i][0] + blockSize &&
+        if (gX - 4 <= obj2Pos[i][0] + blockSize &&
             gX + ghostSize > obj2Pos[i][0] &&
             gY + ghostSize + 1 >= obj2Pos[i][1] &&
             gY - 1 <= obj2Pos[i][1] + blockSize
-            || gX <= 4)
+            || gX <= 2)
         {
           return true;
         }
@@ -80,9 +81,9 @@ let ghostMovement = () => {
       for (let i = 0; i < obj2Pos.length; i++){
         if (gY - 4 <= obj2Pos[i][1] + blockSize &&
             gY + ghostSize > obj2Pos[i][1] &&
-            gX + ghostSize >= obj2Pos[i][0] &&
-            gX <= obj2Pos[i][0] + blockSize
-            || gY <= 4)
+            gX + ghostSize + 1 >= obj2Pos[i][0] &&
+            gX - 1 <= obj2Pos[i][0] + blockSize
+            || gY <= 2)
         {
           return true;
         }
@@ -95,9 +96,9 @@ let ghostMovement = () => {
       for (let i = 0; i < obj2Pos.length; i++){
         if (gY + ghostSize + 4 >= obj2Pos[i][1] &&
             gY < obj2Pos[i][1] &&
-            gX + ghostSize >= obj2Pos[i][0] &&
-            gX <= obj2Pos[i][0] + blockSize
-            || gY + ghostSize >= 516)
+            gX + ghostSize + 1 >= obj2Pos[i][0] &&
+            gX - 1 <= obj2Pos[i][0] + blockSize
+            || gY + ghostSize >= 518)
         {
           return true;
         }
@@ -113,27 +114,25 @@ let ghostMovement = () => {
     ghost.css({'top' : gY });
   }
 
-  $('.ghost').each(function(index) {
-    let thisGhost = $(this);
-    let direction = {
-        right : false,
-        left  : false,
-        up    : false,
-        down  : false
+
+    for (let i = 0; i < ghostDiv.length; i++) {
+      array[i]
     }
+    $('.ghost').each(function(index) {
+      let thisGhost = $(this);
+      let possibleDir = ['right','up','down','left'];
+      let direction = {
+          right : false,
+          left  : false,
+          up    : false,
+          down  : false
+      }
 
-    let time = setInterval(function () {
+      let time = setInterval(function () {
+        if (direction.right === true){
+          moveGhost(1, 0, thisGhost);
 
-      if (direction.right && !checkCollRight(thisGhost)){
-        moveGhost(1, 0, thisGhost);
-      } else if (direction.left && !checkCollLeft(thisGhost)){
-        moveGhost(-1, 0, thisGhost);
-      } else if (direction.up && !checkCollUp(thisGhost)){
-        moveGhost(0, -1, thisGhost);
-      } else if (direction.down && !checkCollDown(thisGhost)){
-        moveGhost(0, 1, thisGhost);
-      } else {
-        let possibleDir = ['right','up','down','left'];
+        }
 
         if (checkCollRight(thisGhost)) {
           for (var i = 0; i < possibleDir.length; i++) {
@@ -167,9 +166,11 @@ let ghostMovement = () => {
             }
           }
         }
+
         let newDir = Math.round(
           Math.random() * (possibleDir.length - 1)
         );
+
         switch(possibleDir[newDir]) {
           case 'left':
             direction.left = true;
@@ -188,12 +189,11 @@ let ghostMovement = () => {
             // moveGhost(0, 1, thisGhost);
             break;
         }
-      }
-  }, 60);
+      }, 100);
 
 
 
-  });
+    });
 
 
 }

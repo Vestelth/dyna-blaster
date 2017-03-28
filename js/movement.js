@@ -159,3 +159,4 @@ let playerMovement = () => {
   }, 40);
 
 } // end of playerMovement() function
+module.exports = playerMovement;

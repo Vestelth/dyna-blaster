@@ -33,6 +33,7 @@ div.brick {
   height: 40px;
   border-radius: 5px;
   background-image: url('../img/brick2.png');
+  background-size: cover;
   box-shadow: 2px 1px 1px 0px rgba(0,0,0,0.75);
 }
 
@@ -52,7 +53,6 @@ div.player {
   margin-top: -2px;
   margin-left: -2px;
   padding-right: 2px;
-  border-radius: 8px;
   background-color: rgb(252, 64, 23);
 }
 
@@ -61,6 +61,25 @@ div.bomb {
   z-index: 2;
   width: 40px;
   height: 40px;
-  background-color: black;
-  border-radius: 50%;
+  background-image: url('../img/bomb.png');
+  background-size: cover;
+  animation: bombSet 0.7s steps(3) infinite;
 }
+
+@keyframes bombSet {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 120px 0;
+    }
+}
+
+/*@keyframes playerDown {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position:
+    }
+}*/

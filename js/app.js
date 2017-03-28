@@ -1,3 +1,7 @@
+let playerMovement = require("./movement.js");
+let bombHandler = require("./bomb.js");
+let ghostMovement = require("./ghost-collision.js");
+
 $(function () {
 
   class Game {
@@ -120,7 +124,7 @@ $(function () {
   game.generateLevel();
 
   playerMovement();
-  ghostMovement(bombHandler());
+  ghostMovement();
   bombHandler();
 
 

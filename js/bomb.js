@@ -99,3 +99,4 @@ let bombHandler = () => {
     return true;
 
 } // end of bombHandler
+module.exports = bombHandler;

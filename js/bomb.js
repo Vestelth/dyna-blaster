@@ -41,9 +41,7 @@ let bombHandler = () => {
 
               }, 2000);
             }
-
             tickerStart(bombX, bombY);
-
             bombNumber ++;
           }
         }
@@ -98,5 +96,6 @@ let bombHandler = () => {
       //   console.log('interval cleared');
       // }, 600);
     }
+    return true;
 
 } // end of bombHandler

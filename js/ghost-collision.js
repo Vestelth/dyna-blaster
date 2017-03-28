@@ -35,24 +35,29 @@
     const ghostSize = parseInt($('.ghost').css('width'));
     const blockSize = parseInt($('.wall').css('width'));
     const ghostDiv = $('.ghost');
+
+    // brick positions for ghosts
     let obj2Pos = [];
+
     $('.block').each( function(index) {
-        let x = $(this).position().left;
-        let y = $(this).position().top;
+        let x = Math.round($(this).position().left);
+        let y = Math.round($(this).position().top);
         obj2Pos.push([x, y]);
     });
-
-    setInterval(function () {
-      if ($('.bomb').length != 0) {
-        let bX = $('.bomb').position().left;
-        let bY = $('.bomb').position().top;
-        obj2Pos.push([bX, bY]);
-      }
-    }, 200);
 
     $(document).on('keydown', function(event) {
         if (event.which == 32) {
           event.preventDefault();
+
+          setTimeout(function () {
+            let bX = Math.round($('.bomb')
+                  .position().left);
+            let bY = Math.round($('.bomb')
+                  .position().top);
+
+            obj2Pos.push([bX, bY]);
+          }, 100);
+
           setTimeout(function () {
             obj2Pos =[];
             $('.block').each( function(index) {

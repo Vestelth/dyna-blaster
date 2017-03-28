@@ -192,24 +192,27 @@ var ghostMovement = function ghostMovement() {
   var ghostSize = parseInt($('.ghost').css('width'));
   var blockSize = parseInt($('.wall').css('width'));
   var ghostDiv = $('.ghost');
+
+  // brick positions for ghosts
   var obj2Pos = [];
+
   $('.block').each(function (index) {
-    var x = $(this).position().left;
-    var y = $(this).position().top;
+    var x = Math.round($(this).position().left);
+    var y = Math.round($(this).position().top);
     obj2Pos.push([x, y]);
   });
-
-  setInterval(function () {
-    if ($('.bomb').length != 0) {
-      var bX = $('.bomb').position().left;
-      var bY = $('.bomb').position().top;
-      obj2Pos.push([bX, bY]);
-    }
-  }, 200);
 
   $(document).on('keydown', function (event) {
     if (event.which == 32) {
       event.preventDefault();
+
+      setTimeout(function () {
+        var bX = Math.round($('.bomb').position().left);
+        var bY = Math.round($('.bomb').position().top);
+
+        obj2Pos.push([bX, bY]);
+      }, 100);
+
       setTimeout(function () {
         obj2Pos = [];
         $('.block').each(function (index) {
@@ -615,7 +618,7 @@ $(function () {
         var generateGhosts = function generateGhosts() {
 
           // .ghost elements string
-          var divGhostsString = '<div class="ghost mobile"></div><div class="ghost mobile"></div><div class="ghost mobile"></div><div class="ghost mobile"></div>';
+          var divGhostsString = '<div class="ghost mobile"></div><div class="ghost mobile"></div><div class="ghost mobile"></div><div class="ghost mobile"></div><div class="ghost mobile"></div>';
 
           // append .ghosts
           _this.board.append($(divGhostsString));

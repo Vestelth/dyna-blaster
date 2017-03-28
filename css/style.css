@@ -41,8 +41,9 @@ div.ghost {
   position: absolute;
   width: 34px;
   height: 34px;
-  background-image: url('../img/ryuk.png');
-  background-size: 400% ;
+  background-image: url('../img/munmar.gif');
+  background-size: cover;
+  animation: ghost 1.4s infinite;
 }
 
 div.player {
@@ -54,7 +55,7 @@ div.player {
   margin-left: -2px;
   padding-right: 2px;
   background-image: url('../img/player.png');
-  background-size: 1480%;
+  background-size: 1490%;
 }
 
 div.bomb {
@@ -78,10 +79,16 @@ div.bomb {
 
 @keyframes ghost {
     0% {
-        background-position: 0 0;
+        background-size: 95%;
+    }
+    33% {
+        background-size: 105%;
+    }
+    67% {
+        background-size: 110%;
     }
     100% {
-        background-position: 120px 0;
+        background-size: 100%;
     }
 }
 

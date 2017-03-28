@@ -220,7 +220,7 @@ var ghostMovement = function ghostMovement() {
           var y = $(this).position().top;
           obj2Pos.push([x, y]);
         });
-      }, 2000);
+      }, 4000);
     }
   });
 

@@ -41,9 +41,9 @@ div.ghost {
   position: absolute;
   width: 34px;
   height: 34px;
-  background-image: url('../img/munmar.gif');
+  background-image: url('../img/nuwalk.gif');
   background-size: cover;
-  animation: ghost 1.4s infinite;
+  /*animation: ghost 1.4s infinite;*/
 }
 
 div.player {

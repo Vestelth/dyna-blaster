@@ -15,6 +15,7 @@ $(function () {
       this.wall    =  $('.wall');
       this.brick   =  $('.brick');
       this.player  =  $('.player');
+      this.music = new Audio("sounds/level-music.wav");
     }
 
     // --- FIND BRICK SLOTS ------------------------- /
@@ -107,16 +108,20 @@ $(function () {
         });
       }
       generateGhosts();
+
+      this.music.play();
+
     }
 
   } // end of Game() object
 
   let startGame = () => {
+    const menuMusic = new Audio("sounds/menu.wav");
+    menuMusic.play();
     $('h2.start').on('click', function(){
       $('div.menu').fadeOut(800);
       setTimeout(function () {
         let game = new Game();
-
         game.generateLevel();
         playerMovement();
         ghostMovement();

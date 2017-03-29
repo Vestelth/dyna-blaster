@@ -94,6 +94,7 @@ div.brick {
   box-sizing: border-box;
   width: 40px;
   height: 40px;
+  z-index: 2;
   border-radius: 5px;
   background-image: url('../img/brick2.png');
   background-size: cover;
@@ -133,11 +134,12 @@ div.bomb {
 
 div.powerup {
   position: absolute;
-  z-index: -1;
+  z-index: 0;
   animation: power 0.5s steps(2) infinite;
   background-size: cover;
   width: 40px;
   height: 40px;
+  border-radius: 5px;
 }
 
 @keyframes power {

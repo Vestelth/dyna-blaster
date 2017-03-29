@@ -81,6 +81,7 @@ var bombHandler = function bombHandler() {
     var range = 1;
     var bombNumber = 0;
     var bricksPositions = [];
+    var boom = new Audio("sounds/boom.wav");
 
     // event to make bomb with space button
     $(document).on('keydown', function (event) {
@@ -107,7 +108,7 @@ var bombHandler = function bombHandler() {
                         brickBurn(x, y);
                         // hurt player or ghosts
                         bombCharDamage(x, y);
-
+                        boom.play();
                         $('.bomb').remove();
 
                         bombNumber--;
@@ -534,6 +535,7 @@ $(function () {
       this.wall = $('.wall');
       this.brick = $('.brick');
       this.player = $('.player');
+      this.music = new Audio("sounds/level-music.wav");
     }
 
     // --- FIND BRICK SLOTS ------------------------- /
@@ -634,6 +636,8 @@ $(function () {
           });
         };
         generateGhosts();
+
+        this.music.play();
       }
     }]);
 
@@ -641,11 +645,12 @@ $(function () {
   }(); // end of Game() object
 
   var startGame = function startGame() {
+    var menuMusic = new Audio("sounds/menu.wav");
+    menuMusic.play();
     $('h2.start').on('click', function () {
       $('div.menu').fadeOut(800);
       setTimeout(function () {
         var game = new Game();
-
         game.generateLevel();
         playerMovement();
         ghostMovement();

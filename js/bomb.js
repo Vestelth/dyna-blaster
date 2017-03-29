@@ -6,6 +6,7 @@ let bombHandler = () => {
     const range = 1;
     let bombNumber = 0;
     let bricksPositions = [];
+    let boom = new Audio("sounds/boom.wav");
 
     // event to make bomb with space button
     $(document).on('keydown', function(event) {
@@ -33,7 +34,7 @@ let bombHandler = () => {
                   brickBurn(x, y);
                   // hurt player or ghosts
                   bombCharDamage(x, y);
-
+                  boom.play();
                   $('.bomb').remove();
 
                   bombNumber --;

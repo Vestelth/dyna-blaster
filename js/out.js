@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -125,15 +125,19 @@ var bombHandler = function bombHandler() {
 
         var fireLeft = $('.game-grid').find('.' + (x - 40) + '-' + y);
         fireLeft.fadeOut(300);
+        fireLeft.remove();
 
         var fireRight = $('.game-grid').find('.' + (x + 40) + '-' + y);
         fireRight.fadeOut(300);
+        fireRight.remove();
 
         var fireUp = $('.game-grid').find('.' + x + '-' + (y + 40));
         fireUp.fadeOut(300);
+        fireUp.remove();
 
         var fireDown = $('.game-grid').find('.' + x + '-' + (y - 40));
         fireDown.fadeOut(300);
+        fireDown.remove();
     };
 
     // bomb hurts moving characters
@@ -145,15 +149,14 @@ var bombHandler = function bombHandler() {
             var bombSize = parseInt($('.bomb').css('width'));
 
             if (charX + charSize > bX - range * 40 && charX < bX + bombSize + range * 40 && charY + charSize > bY && charY < bY + bombSize) {
-
-                $(this).fadeOut(300);
+                $(this).fadeOut(200);
+                $(this).remove();
             } else if (charY + charSize > bY - range * 40 && charY < bY + bombSize + range * 40 && charX + charSize > bX && charX < bX + bombSize) {
-
-                $(this).fadeOut(300);
+                $(this).fadeOut(200);
+                $(this).remove();
             }
         });
     };
-    return true;
 }; // end of bombHandler
 module.exports = bombHandler;
 
@@ -166,30 +169,31 @@ module.exports = bombHandler;
 
 // GHOST MOVEMENT ------------------ /
 
-var ghostEatsPlayer = function ghostEatsPlayer() {
-
-  var playerX = $('.player').position().left;
-  var playerY = $('.player').position().top;
-  var playerSize = parseInt($('.player').css('width'));
-
-  $('.ghost').each(function (index) {
-    var ghostX = $(this).position().left;
-    var ghostY = $(this).position().top;
-    var ghostSize = parseInt($(this).css('width'));
-
-    if (ghostX < playerX + playerSize && ghostX + ghostSize > playerX && ghostY < playerY + playerSize && ghostY + ghostSize > playerY) {
-      //TODO: game over, restart and -1 life;
-      $('.player').fadeOut(300);
-      // gameOver();
-    }
-  });
-};
-
 var ghostMovement = function ghostMovement() {
+
+  var ghostEatsPlayer = function ghostEatsPlayer() {
+
+    var playerX = $('.player').position().left;
+    var playerY = $('.player').position().top;
+    var playerSize = parseInt($('.player').css('width'));
+    var monstah = $('.ghost');
+
+    monstah.each(function (index) {
+      var ghostX = $(this).position().left;
+      var ghostY = $(this).position().top;
+      var ghostSize = parseInt($(this).css('width'));
+
+      if (ghostX < playerX + playerSize && ghostX + ghostSize > playerX && ghostY < playerY + playerSize && ghostY + ghostSize > playerY) {
+        $('.player').fadeOut(200);
+      }
+    });
+  };
+
   // checks if ghost eats player
+
   var ghostPlayerTicker = setInterval(function () {
     ghostEatsPlayer();
-  }, 20);
+  }, 100);
 
   var ghostSize = parseInt($('.ghost').css('width'));
   var blockSize = parseInt($('.wall').css('width'));
@@ -350,7 +354,7 @@ var ghostMovement = function ghostMovement() {
             break;
         }
       }
-    }, 40);
+    }, 50);
   });
 };
 
@@ -520,7 +524,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var playerMovement = __webpack_require__(2);
 var bombHandler = __webpack_require__(0);
 var ghostMovement = __webpack_require__(1);
-var powerUp = __webpack_require__(5);
+var interactiveObjects = __webpack_require__(4);
 
 $(function () {
   var Game = function () {
@@ -535,7 +539,6 @@ $(function () {
       this.wall = $('.wall');
       this.brick = $('.brick');
       this.player = $('.player');
-      this.music = new Audio("sounds/level-music.wav");
     }
 
     // --- FIND BRICK SLOTS ------------------------- /
@@ -635,9 +638,12 @@ $(function () {
             freeSlots.splice(pos, 1);
           });
         };
+
         generateGhosts();
 
-        this.music.play();
+        $('div.game-over h3').on('click', function () {
+          document.location.reload();
+        });
       }
     }]);
 
@@ -647,15 +653,20 @@ $(function () {
   var startGame = function startGame() {
     var menuMusic = new Audio("sounds/menu.wav");
     menuMusic.play();
+
     $('h2.start').on('click', function () {
+
       $('div.menu').fadeOut(800);
+
+      menuMusic.pause();
+
       setTimeout(function () {
         var game = new Game();
         game.generateLevel();
         playerMovement();
         ghostMovement();
         bombHandler();
-        powerUp();
+        interactiveObjects();
       }, 300);
     });
   };
@@ -667,38 +678,105 @@ $(function () {
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(0);
-__webpack_require__(2);
-__webpack_require__(1);
-module.exports = __webpack_require__(3);
+"use strict";
 
+
+var interactiveObjects = function interactiveObjects() {
+
+  var levelMusic = new Audio("sounds/level-music.wav");
+  var deathSound = new Audio("sounds/death.wav");
+  var bonusSound = new Audio("sounds/bonus.wav");
+
+  // EXIT LEVEL
+  var exit = $('<div class="exit"></div>');
+  $('div.game-grid').append(exit);
+
+  var spot = Math.round(Math.random() * ($('.brick').length - 1));
+
+  var exitX = Math.round($('.brick').eq(spot).position().left);
+  var exitY = Math.round($('.brick').eq(spot).position().top);
+  var exitSize = parseInt($('.exit').css('width'));
+  var playerSize = parseInt($('.player').css('width'));
+  var exitSound = new Audio("sounds/clear.wav");
+
+  $('.exit').css({ 'left': exitX });
+  $('.exit').css({ 'top': exitY });
+
+  var playerExit = function playerExit() {
+    var playerX = $('.player').position().left;
+    var playerY = $('.player').position().top;
+
+    if (exitX < playerX + playerSize && exitX + exitSize > playerX && exitY < playerY + playerSize && exitY + exitSize > playerY) {
+      $('.exit').addClass('blink');
+      // WON GAME SCREEN
+      return true;
+    }
+  };
+
+  //LET'S BUFF THIS GUY, HUH?
+  var power = $('<div class="powerup"></div>');
+  $('div.game-grid').append(power);
+
+  var place = Math.round(Math.random() * ($('.brick').length - 1));
+
+  var powX = Math.round($('.brick').eq(place).position().left);
+  var powY = Math.round($('.brick').eq(place).position().top);
+  var powSize = parseInt($('.powerup').css('width'));
+
+  $('.powerup').css({ 'left': powX });
+  $('.powerup').css({ 'top': powY });
+
+  var playerPower = function playerPower() {
+    var playerX = $('.player').position().left;
+    var playerY = $('.player').position().top;
+
+    if (powX < playerX + playerSize && powX + powSize > playerX && powY < playerY + playerSize && powY + powSize > playerY) {
+      $('.powerup').fadeOut(50);
+      return true;
+    }
+  };
+
+  var exitListener = setInterval(function () {
+    if ($('.ghost').length === 0 && playerExit()) {
+      clearInterval(exitListener);
+      levelMusic.pause();
+      exitSound.play();
+      $(document).unbind();
+      $('div.win').fadeIn(10);
+    }
+  }, 300);
+
+  var bonusListener = setInterval(function () {
+    if (playerPower()) {
+      clearInterval(bonusListener);
+      bonusSound.play();
+    }
+  }, 300);
+
+  levelMusic.play();
+
+  var gameOverListener = setInterval(function () {
+    if ($('.player').css('display') == 'none') {
+      clearInterval(gameOverListener);
+      levelMusic.pause();
+      deathSound.play();
+      $(document).unbind();
+      $('div.game-over').fadeIn(10);
+    }
+  }, 200);
+};
+
+module.exports = interactiveObjects;
 
 /***/ }),
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
+__webpack_require__(0);
+__webpack_require__(2);
+__webpack_require__(1);
+module.exports = __webpack_require__(3);
 
-
-//LET'S BUFF THIS GUY, HUH?
-
-var powerUp = function powerUp() {
-  var power = $('<div class="powerup"></div>');
-  $('div.game-grid').append(power);
-
-  var place = Math.round(Math.random() * ($('.brick').length - 1));
-  console.log(place);
-  var powX = Math.round($('.brick').eq(place).position().left);
-  var powY = Math.round($('.brick').eq(place).position().top);
-  console.log(powX, powY);
-  console.log(power);
-  $('.powerup').css({ 'left': powX });
-  $('.powerup').css({ 'top': powY });
-
-  console.log(power.css('left'));
-};
-
-module.exports = powerUp;
 
 /***/ })
 /******/ ]);

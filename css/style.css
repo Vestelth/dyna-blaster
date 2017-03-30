@@ -11,6 +11,10 @@ body {
   background-color: rgb(0, 9, 38);
 }
 
+div.hidden {
+  display: none;
+}
+
 div.game-grid {
   width: 520px;
   height: 520px;
@@ -28,7 +32,7 @@ div.menu {
   background-color: black;
   z-index: 6;
   color: #FFFFFF;
-  font-family: 'Revalia', arialx;
+  font-family: 'Revalia', arial;
   display: -webkit-box;
   display: -ms-flexbox;
   display: -webkit-flex;
@@ -48,7 +52,7 @@ div.menu h1.title {
 }
 
 div.menu h1.title span {
-  color: rgb(233, 42, 0)
+  color: rgb(245, 40, 0);
 }
 
 div.menu h3 {
@@ -76,11 +80,50 @@ h2.start:hover{
   cursor: hand;
 }
 
-div.game-over {
-  visibility: hidden;
+div.game-over, div.win {
+  z-index: 5;
+  position: absolute;
+  width: 100%;
+  height: 60vh;
+  padding-top: 30vh;
+  margin: 0 auto;
+  text-transform: uppercase;
+  color: rgb(245, 40, 0);
+  background-color: rgba(0, 0, 0, 0.65);
+  text-align: center;
+}
+
+.game-over h2, .game-over h3, .win h2, .win h3{
+  font-family: 'VT323', serif;
+  font-size: 5em;
+  font-weight: 400;
+}
+
+.game-over h3 {
+  font-size: 2.5em;
+}
+
+.game-over h3:hover{
+  color: rgb(240, 223, 0);
+  cursor: pointer;
+  cursor: hand;
+}
+
+div.win h3, div.win h2 {
+  max-width: 60vw;
+  margin: 0 auto;
+}
+
+div.win a {
+  color: rgb(50, 135, 233);
+}
+
+div.win a:hover {
+  color: rgb(240, 223, 0);
 }
 
 div.wall {
+  z-index: 2;
   position: absolute;
   width: 40px;
   height: 40px;
@@ -103,6 +146,7 @@ div.brick {
 
 div.ghost {
   position: absolute;
+  z-index: 3;
   width: 34px;
   height: 34px;
   background-image: url('../img/nuwalk.gif');
@@ -142,14 +186,46 @@ div.powerup {
   border-radius: 5px;
 }
 
+div.exit {
+  position: absolute;
+  z-index: 0;
+  animation: exit 0.5s steps(2) infinite;
+  background-image: url('../img/teleporter.png');
+  background-size: cover;
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+}
+
+.blink {
+  animation: blink 0.5s steps(2) infinite;
+}
+
+@keyframes blink {
+  0%{
+    display: none;
+  }
+  100%{
+    display: block;
+  }
+}
+
 @keyframes power {
   0%{
     background-image: url('../img/powerup.gif');
   }
   100%{
     background-image: url('../img/powerup1.gif');
-
   }
+}
+
+@keyframes exit {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 80px 0;
+    }
 }
 
 @keyframes bombSet {

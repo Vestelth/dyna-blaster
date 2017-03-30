@@ -1,7 +1,7 @@
 let playerMovement = require("./movement.js");
 let bombHandler = require("./bomb.js");
 let ghostMovement = require("./ghost-collision.js");
-let powerUp = require("./powerup.js")
+let interactiveObjects = require("./powerup.js")
 
 $(function () {
 
@@ -15,7 +15,6 @@ $(function () {
       this.wall    =  $('.wall');
       this.brick   =  $('.brick');
       this.player  =  $('.player');
-      this.music = new Audio("sounds/level-music.wav");
     }
 
     // --- FIND BRICK SLOTS ------------------------- /
@@ -107,9 +106,12 @@ $(function () {
           freeSlots.splice(pos, 1);
         });
       }
+
       generateGhosts();
 
-      this.music.play();
+      $('div.game-over h3').on('click', function(){
+        document.location.reload();
+      });
 
     }
 
@@ -118,17 +120,22 @@ $(function () {
   let startGame = () => {
     const menuMusic = new Audio("sounds/menu.wav");
     menuMusic.play();
+
     $('h2.start').on('click', function(){
+
       $('div.menu').fadeOut(800);
+
+      menuMusic.pause();
+
       setTimeout(function () {
         let game = new Game();
         game.generateLevel();
         playerMovement();
         ghostMovement();
         bombHandler();
-        powerUp();
-
+        interactiveObjects();
       }, 300);
+
     });
   }
 

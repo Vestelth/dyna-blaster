@@ -1,33 +1,34 @@
 // GHOST MOVEMENT ------------------ /
 
-  let ghostEatsPlayer = () => {
-
-    let playerX = $('.player').position().left;
-    let playerY = $('.player').position().top;
-    let playerSize = parseInt($('.player').css('width'));
-
-    $('.ghost').each( function(index) {
-      let ghostX = $(this).position().left;
-      let ghostY = $(this).position().top;
-      let ghostSize = parseInt($(this).css('width'));
-
-      if (ghostX < playerX + playerSize &&
-          ghostX + ghostSize > playerX &&
-          ghostY < playerY + playerSize &&
-          ghostY + ghostSize > playerY)
-      {
-          //TODO: game over, restart and -1 life;
-          $('.player').fadeOut(300);
-          // gameOver();
-      }
-    });
-  }
-
   let ghostMovement = () => {
+
+    let ghostEatsPlayer = () =>{
+
+      const playerX = $('.player').position().left;
+      const playerY = $('.player').position().top;
+      const playerSize = parseInt($('.player').css('width'));
+      let monstah = $('.ghost');
+
+      monstah.each( function(index) {
+        let ghostX = $(this).position().left;
+        let ghostY = $(this).position().top;
+        let ghostSize = parseInt($(this).css('width'));
+
+        if (ghostX < playerX + playerSize &&
+            ghostX + ghostSize > playerX &&
+            ghostY < playerY + playerSize &&
+            ghostY + ghostSize > playerY)
+        {
+            $('.player').fadeOut(200);
+        }
+      });
+    }
+
     // checks if ghost eats player
+
     let ghostPlayerTicker = setInterval(function () {
       ghostEatsPlayer();
-    }, 20);
+    }, 100);
 
     const ghostSize = parseInt($('.ghost').css('width'));
     const blockSize = parseInt($('.wall').css('width'));
@@ -212,7 +213,7 @@
               break;
           }
         }
-      }, 40);
+      }, 50);
     });
   }
 

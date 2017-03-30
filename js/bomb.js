@@ -3,7 +3,7 @@
 let bombHandler = () => {
 
     const bricks = $('div.brick');
-    const range = 1;
+    let range = 1;
     let bombNumber = 0;
     let bricksPositions = [];
     let boom = new Audio("sounds/boom.wav");
@@ -52,44 +52,45 @@ let bombHandler = () => {
 
       let fireLeft = $('.game-grid').find('.' + (x - 40) + '-' + y);
       fireLeft.fadeOut(300);
+      fireLeft.remove();
 
       let fireRight = $('.game-grid').find('.' + (x + 40) + '-' + y);
       fireRight.fadeOut(300);
+      fireRight.remove();
 
       let fireUp = $('.game-grid').find('.' + x + '-' + (y + 40));
       fireUp.fadeOut(300);
+      fireUp.remove();
 
       let fireDown = $('.game-grid').find('.'+ x + '-' + (y - 40));
       fireDown.fadeOut(300);
+      fireDown.remove();
     }
 
     // bomb hurts moving characters
     let bombCharDamage = (bX, bY) => {
         $('.mobile').each( function(index) {
-          let charX = $(this).position().left;
-          let charY = $(this).position().top;
-          let charSize = parseInt($(this).css('width'));
-          let bombSize = parseInt($('.bomb').css('width'));
+          const charX = $(this).position().left;
+          const charY = $(this).position().top;
+          const charSize = parseInt($(this).css('width'));
+          const bombSize = parseInt($('.bomb').css('width'));
 
           if (charX + charSize > bX - (range * 40) &&
               charX < bX + bombSize + (range * 40) &&
               charY + charSize > bY && charY < bY + bombSize)
           {
-
-              $(this).fadeOut(300);
-
+              $(this).fadeOut(200);
+              $(this).remove();
           } else if
              (charY + charSize > bY - (range * 40) &&
               charY < bY + bombSize + (range * 40) &&
               charX + charSize > bX && charX < bX + bombSize)
           {
-
-              $(this).fadeOut(300);
-
+              $(this).fadeOut(200);
+              $(this).remove();
           }
         });
     }
-    return true;
 
 } // end of bombHandler
 module.exports = bombHandler;

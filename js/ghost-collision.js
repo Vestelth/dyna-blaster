@@ -4,24 +4,29 @@
 
     let ghostEatsPlayer = () =>{
 
-      const playerX = $('.player').position().left;
-      const playerY = $('.player').position().top;
-      const playerSize = parseInt($('.player').css('width'));
-      let monstah = $('.ghost');
+      if ($('.player').length === 0){
+        return false;
+      } else {
+        const playerX = $('.player').position().left;
+        const playerY = $('.player').position().top;
+        const playerSize = parseInt($('.player').css('width'));
+        let monstah = $('.ghost');
 
-      monstah.each( function(index) {
-        let ghostX = $(this).position().left;
-        let ghostY = $(this).position().top;
-        let ghostSize = parseInt($(this).css('width'));
+        monstah.each( function(index) {
+          let ghostX = $(this).position().left;
+          let ghostY = $(this).position().top;
+          let ghostSize = parseInt($(this).css('width'));
 
-        if (ghostX < playerX + playerSize &&
-            ghostX + ghostSize > playerX &&
-            ghostY < playerY + playerSize &&
-            ghostY + ghostSize > playerY)
-        {
-            $('.player').fadeOut(200);
-        }
-      });
+          if (ghostX < playerX + playerSize &&
+              ghostX + ghostSize > playerX &&
+              ghostY < playerY + playerSize &&
+              ghostY + ghostSize > playerY)
+          {
+              $('.player').fadeOut(200);
+          }
+        });
+      }
+
     }
 
     // checks if ghost eats player

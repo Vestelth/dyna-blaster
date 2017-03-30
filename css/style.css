@@ -198,7 +198,7 @@ div.exit {
 }
 
 .blink {
-  animation: blink 0.5s steps(2) infinite;
+  animation: blink 0.3s infinite;
 }
 
 @keyframes blink {

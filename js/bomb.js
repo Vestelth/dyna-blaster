@@ -80,7 +80,7 @@ let bombHandler = () => {
           } else {
             range = 2;
           }
-
+          
           if (charX + charSize > bX - (range * 40) &&
               charX < bX + bombSize + (range * 40) &&
               charY + charSize > bY && charY < bY + bombSize)

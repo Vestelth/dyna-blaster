@@ -11,6 +11,14 @@ body {
   background-color: rgb(0, 9, 38);
 }
 
+a {
+  color: rgb(50, 135, 233);
+}
+
+a:hover {
+  color: rgb(240, 223, 0);
+}
+
 div.hidden {
   display: none;
 }
@@ -119,13 +127,7 @@ div.win h3, div.win h2 {
   margin: 0 auto;
 }
 
-div.win a, div.game-over a {
-  color: rgb(50, 135, 233);
-}
 
-div.win a:hover, div.game-over a:hover {
-  color: rgb(240, 223, 0);
-}
 
 div.wall {
   z-index: 2;

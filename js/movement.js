@@ -30,13 +30,13 @@ let playerMovement = () => {
   // player control
   let detectPlayerMovement = () => {
     // wall collisions
-    // wall size=brick size,width = height
+    // wall size=brick size, width = height
     let x = 0;
     let y = 0;
 
     const playerSize = parseInt($('.player').css('width'));
     const objSize = parseInt($('.wall').css('width'));
-
+    
     const walls = $('.wall');
     const bricks = $('.brick');
     let objPos = [];

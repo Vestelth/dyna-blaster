@@ -119,11 +119,11 @@ div.win h3, div.win h2 {
   margin: 0 auto;
 }
 
-div.win a {
+div.win a, div.game-over a {
   color: rgb(50, 135, 233);
 }
 
-div.win a:hover {
+div.win a:hover, div.game-over a:hover {
   color: rgb(240, 223, 0);
 }
 
@@ -149,13 +149,18 @@ div.brick {
   box-shadow: 2px 1px 1px 0px rgba(0,0,0,0.75);
 }
 
-div.ghost {
+div.ghost, div.munmar {
   position: absolute;
   z-index: 3;
   width: 34px;
   height: 34px;
   background-image: url('../img/nuwalk.gif');
   background-size: cover;
+}
+
+div.munmar {
+  background-image: url('../img/munmar.gif');
+  animation: munmar 1s infinite;
 }
 
 div.player {
@@ -218,6 +223,34 @@ div.exit {
   animation: player-down 1s steps(4) infinite;
 }
 
+.boom {
+  position: absolute;
+  z-index: 4;
+  width: 40px;
+  height: 40px;
+  background-image: url('../img/mid0.png');
+  background-size: cover;
+  animation: boom 0.6s steps(5) infinite;
+}
+
+@keyframes boom {
+  0%{
+    background-image: url('../img/mid4.png');
+  }
+  25%{
+    background-image: url('../img/mid3.png');
+  }
+  50%{
+    background-image: url('../img/mid2.png');
+  }
+  75%{
+    background-image: url('../img/mid1.png');
+  }
+  100%{
+    background-image: url('../img/mid0.png');
+  }
+}
+
 @keyframes player-left {
   0%{
     background-image: url('../img/1left1.png');
@@ -275,7 +308,6 @@ div.exit {
   }
 }
 
-
 @keyframes power {
   0%{
     background-image: url('../img/powerup.gif');
@@ -315,11 +347,11 @@ div.exit {
   }
 }
 
-/*@keyframes playerDown {
+@keyframes munmar {
     0% {
-      background-position: 0 0;
+      transform: scale(1.02);
     }
     100% {
-      background-position:
+      transform: scale(0.97);
     }
-}*/
+}

@@ -29,12 +29,22 @@ let bombHandler = () => {
             // destroy bricks after bomb explodes
             let tickerStart = (x, y) => {
               let ticker = setTimeout(() => {
-                  // destroy brick walls
-                  brickBurn(x, y);
-                  // hurt player or ghosts
-                  bombCharDamage(x, y);
-                  boom.play();
-                  $('#bomb1').remove();
+                // destroy brick walls
+                brickBurn(x, y);
+                // hurt player or ghosts
+                bombCharDamage(x, y);
+                // boom sound
+                boom.play();
+                let makeBoom = $('<div class="boom"></div>')
+                               .appendTo($('.game-grid'));
+                $('.boom').css({
+                  'left': bombX + 'px',
+                  'top': bombY + 'px',
+                });
+                $('#bomb1').remove();
+                setTimeout(function () {
+                    $('.boom').remove();
+                }, 600);
               }, 2500);
             }
             tickerStart(bombX, bombY);
@@ -43,7 +53,7 @@ let bombHandler = () => {
             let bomb2X = Math.round( playerX / 40 ) * 40;
             let bomb2Y = Math.round( playerY / 40 ) * 40;
             const makeBomb2 = $('<div class="bomb" id="bomb2"></div>')
-            .appendTo($('.game-grid'));
+                .appendTo($('.game-grid'));
             $('#bomb2').css({
               'left': bomb2X + 'px',
               'top': bomb2Y + 'px',
@@ -52,12 +62,25 @@ let bombHandler = () => {
             // destroy bricks after bomb explodes
             let tickerStart = (x, y) => {
               let ticker = setTimeout(() => {
-                  // destroy brick walls
-                  brickBurn(x, y);
-                  // hurt player or ghosts
-                  bombCharDamage(x, y);
-                  boom.play();
-                  $('#bomb2').remove();
+                // destroy brick walls
+                brickBurn(x, y);
+                // hurt player or ghosts
+                bombCharDamage(x, y);
+                // boom sound
+                boom.play();
+                let makeBoom2 = $('<div class="boom"></div>')
+                    .appendTo($('.game-grid'));
+                $('.boom').css({
+                  'left': bomb2X + 'px',
+                  'top': bomb2Y + 'px',
+                });
+
+                $('#bomb2').remove();
+
+                setTimeout(function () {
+                    $('.boom').remove();
+                }, 600);
+
               }, 2500);
             }
             tickerStart(bomb2X, bomb2Y);

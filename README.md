@@ -2,7 +2,7 @@
 
 > Simple and known game in javascript/jquery/css/html
 
->[my blog about the project](https://devprogress.wordpress.com)
+>[Play the game!](https://vestelth.github.io)
 
 
 ## example text

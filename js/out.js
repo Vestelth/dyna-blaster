@@ -107,8 +107,17 @@ var bombHandler = function bombHandler() {
             brickBurn(x, y);
             // hurt player or ghosts
             bombCharDamage(x, y);
+            // boom sound
             boom.play();
+            var makeBoom = $('<div class="boom"></div>').appendTo($('.game-grid'));
+            $('.boom').css({
+              'left': bombX + 'px',
+              'top': bombY + 'px'
+            });
             $('#bomb1').remove();
+            setTimeout(function () {
+              $('.boom').remove();
+            }, 600);
           }, 2500);
         };
         tickerStart(bombX, bombY);
@@ -128,8 +137,19 @@ var bombHandler = function bombHandler() {
             brickBurn(x, y);
             // hurt player or ghosts
             bombCharDamage(x, y);
+            // boom sound
             boom.play();
+            var makeBoom2 = $('<div class="boom"></div>').appendTo($('.game-grid'));
+            $('.boom').css({
+              'left': bomb2X + 'px',
+              'top': bomb2Y + 'px'
+            });
+
             $('#bomb2').remove();
+
+            setTimeout(function () {
+              $('.boom').remove();
+            }, 600);
           }, 2500);
         };
         _tickerStart(bomb2X, bomb2Y);
@@ -422,7 +442,7 @@ var playerMovement = function playerMovement() {
   // player control
   var detectPlayerMovement = function detectPlayerMovement() {
     // wall collisions
-    // wall size=brick size,width = height
+    // wall size=brick size, width = height
     var x = 0;
     var y = 0;
 
@@ -670,7 +690,7 @@ $(function () {
         var generateGhosts = function generateGhosts() {
 
           // .ghost elements string
-          var divGhostsString = '<div class="ghost mobile"></div><div class="ghost mobile"></div><div class="ghost mobile"></div><div class="ghost mobile"></div><div class="ghost mobile"></div>';
+          var divGhostsString = '<div class="ghost mobile"></div><div class="ghost mobile"></div><div class="ghost mobile"></div><div class="ghost munmar mobile"></div><div class="ghost munmar mobile"></div>';
 
           // append .ghosts
           _this.board.append($(divGhostsString));

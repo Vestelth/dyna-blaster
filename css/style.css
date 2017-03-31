@@ -99,6 +99,11 @@ div.game-over, div.win {
   font-weight: 400;
 }
 
+div.win {
+  height: 80vh;
+  padding-top: 10vh;
+}
+
 .game-over h3 {
   font-size: 2.5em;
 }
@@ -160,10 +165,9 @@ div.player {
   height: 36px;
   margin-top: -2px;
   margin-left: -2px;
-  background-image: url('../img/ludek.png');
+  background-image: url('../img/1forw0.png');
   background-size: cover;
-  background-position: 1px 0px;
-  background-size: 95%;
+  border: 1px solid blue;
 }
 
 div.bomb {
@@ -197,18 +201,84 @@ div.exit {
   border-radius: 5px;
 }
 
-.blink {
-  animation: blink 0.3s infinite;
+.playerLeft{
+  background-position: -4px 0;
+  background-size: cover;
+  animation: player-left 0.8s steps(4) infinite;
+}
+.playerRight{
+  background-position: -4px 0;
+  background-size: cover;
+  animation: player-right 0.8s steps(4) infinite;
+}
+.playerUp{
+  background-position: -4px -0;
+  background-size: cover;
+  animation: player-up 0.8s steps(4) infinite;
+}
+.playerDown{
+  background-position: -4px 0;
+  background-size: cover;
+  animation: player-down 0.8s steps(4) infinite;
 }
 
-@keyframes blink {
+@keyframes player-left {
   0%{
-    display: none;
+    background-image: url('../img/1left0.png');
   }
-  100%{
-    display: block;
+  34%{
+    background-image: url('../img/1left1.png');
+  }
+  67% {
+    background-image: url('../img/1left0.png');
+  }
+  100% {
+    background-image: url('../img/1left2.png');
   }
 }
+@keyframes player-right {
+  0%{
+    background-image: url('../img/1right0.png');
+  }
+  34%{
+    background-image: url('../img/1right1.png');
+  }
+  67% {
+    background-image: url('../img/1right0.png');
+  }
+  100% {
+    background-image: url('../img/1right2.png');
+  }
+}
+@keyframes player-up {
+  0%{
+    background-image: url('../img/1back0.png');
+  }
+  34%{
+    background-image: url('../img/1back1.png');
+  }
+  67% {
+    background-image: url('../img/1back0.png');
+  }
+  100% {
+    background-image: url('../img/1back2.png');
+  }
+}
+@keyframes player-down {
+  0%{
+    background-image: url('../img/1forw0.png');
+  }
+  34%{
+    background-image: url('../img/1forw1.png');
+  }
+  67% {
+    background-image: url('../img/1forw0.png');
+  }
+  100% {
+    background-image: url('../img/1forw2.png');
+  }
+}
+
 
 @keyframes power {
   0%{

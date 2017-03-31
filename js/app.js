@@ -1,7 +1,7 @@
 let playerMovement = require("./movement.js");
 let bombHandler = require("./bomb.js");
 let ghostMovement = require("./ghost-collision.js");
-let interactiveObjects = require("./powerup.js")
+let interactiveObjects = require("./powerup.js");
 
 $(function () {
 

@@ -62,6 +62,7 @@ let interactiveObjects = () => {
           powY + powSize > playerY)
       {
         $('.powerup').fadeOut(50);
+        $('.powerup').remove();
         return true;
       }
     }
@@ -70,7 +71,6 @@ let interactiveObjects = () => {
   let exitListener = setInterval(function () {
       if ($('.ghost').length === 0 && playerExit()) {
         clearInterval(exitListener);
-        $('.exit').addClass('blink');
         levelMusic.pause();
         exitSound.play();
         $(document).unbind();
@@ -89,11 +89,14 @@ let interactiveObjects = () => {
 
   let gameOverListener = setInterval( () => {
     if($('.player').css('display') == 'none' || $('.player').length === 0){
+      $('.player').addClass('.dead')
       clearInterval(gameOverListener);
       levelMusic.pause();
       deathSound.play();
-      $(document).unbind();
-      $('div.game-over').fadeIn(10);
+      setTimeout(function () {
+        $(document).unbind();
+        $('div.game-over').fadeIn(100);
+      }, 500);
     }
   }, 200);
 

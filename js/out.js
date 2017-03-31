@@ -77,86 +77,91 @@
 
 var bombHandler = function bombHandler() {
 
-    var bricks = $('div.brick');
-    var range = 1;
-    var bombNumber = 0;
-    var bricksPositions = [];
-    var boom = new Audio("sounds/boom.wav");
+  var bricks = $('div.brick');
+  var range = 1;
+  var bombNumber = 0;
+  var bricksPositions = [];
+  var boom = new Audio("sounds/boom.wav");
 
-    // event to make bomb with space button
-    $(document).on('keydown', function (event) {
+  // event to make bomb with space button
+  $(document).on('keydown', function (event) {
 
-        if (event.which == 32) {
-            event.preventDefault();
-            var playerX = $('.player').position().left;
-            var playerY = $('.player').position().top;
-            var bombX = Math.round(playerX / 40) * 40;
-            var bombY = Math.round(playerY / 40) * 40;
+    if (event.which == 32) {
+      event.preventDefault();
+      var playerX = $('.player').position().left;
+      var playerY = $('.player').position().top;
+      var bombX = Math.round(playerX / 40) * 40;
+      var bombY = Math.round(playerY / 40) * 40;
 
-            // create bomb TO.DO: make 'limit' instead of a 0
-            if (bombNumber === 0) {
-                var makeBomb = $('<div class="bomb"></div>').appendTo($('.game-grid'));
-                $('.bomb').css({
-                    'left': bombX + 'px',
-                    'top': bombY + 'px'
-                });
-
-                // destroy bricks after bomb explodes
-                var tickerStart = function tickerStart(x, y) {
-                    var ticker = setTimeout(function () {
-                        // destroy brick walls
-                        brickBurn(x, y);
-                        // hurt player or ghosts
-                        bombCharDamage(x, y);
-                        boom.play();
-                        $('.bomb').remove();
-
-                        bombNumber--;
-                    }, 2500);
-                };
-                tickerStart(bombX, bombY);
-                bombNumber++;
-            }
-        }
-    });
-
-    // find bricks for each blow direction and destroy them
-    var brickBurn = function brickBurn(x, y) {
-
-        var fireLeft = $('.game-grid').find('.' + (x - 40) + '-' + y);
-        fireLeft.fadeOut(300);
-        fireLeft.remove();
-
-        var fireRight = $('.game-grid').find('.' + (x + 40) + '-' + y);
-        fireRight.fadeOut(300);
-        fireRight.remove();
-
-        var fireUp = $('.game-grid').find('.' + x + '-' + (y + 40));
-        fireUp.fadeOut(300);
-        fireUp.remove();
-
-        var fireDown = $('.game-grid').find('.' + x + '-' + (y - 40));
-        fireDown.fadeOut(300);
-        fireDown.remove();
-    };
-
-    // bomb hurts moving characters
-    var bombCharDamage = function bombCharDamage(bX, bY) {
-        $('.mobile').each(function (index) {
-            var charX = $(this).position().left;
-            var charY = $(this).position().top;
-            var charSize = parseInt($(this).css('width'));
-            var bombSize = parseInt($('.bomb').css('width'));
-
-            if (charX + charSize > bX - range * 40 && charX < bX + bombSize + range * 40 && charY + charSize > bY && charY < bY + bombSize) {
-                $(this).fadeOut(200);
-                $(this).remove();
-            } else if (charY + charSize > bY - range * 40 && charY < bY + bombSize + range * 40 && charX + charSize > bX && charX < bX + bombSize) {
-                $(this).fadeOut(200);
-                $(this).remove();
-            }
+      // create bomb TO.DO: make 'limit' instead of a 0
+      if (bombNumber === 0) {
+        var makeBomb = $('<div class="bomb"></div>').appendTo($('.game-grid'));
+        $('.bomb').css({
+          'left': bombX + 'px',
+          'top': bombY + 'px'
         });
-    };
+
+        // destroy bricks after bomb explodes
+        var tickerStart = function tickerStart(x, y) {
+          var ticker = setTimeout(function () {
+            // destroy brick walls
+            brickBurn(x, y);
+            // hurt player or ghosts
+            bombCharDamage(x, y);
+            boom.play();
+            $('.bomb').remove();
+
+            bombNumber--;
+          }, 2500);
+        };
+        tickerStart(bombX, bombY);
+        bombNumber++;
+      }
+    }
+  });
+
+  // find bricks for each blow direction and destroy them
+  var brickBurn = function brickBurn(x, y) {
+
+    var fireLeft = $('.game-grid').find('.' + (x - 40) + '-' + y);
+    fireLeft.fadeOut(300);
+    fireLeft.remove();
+
+    var fireRight = $('.game-grid').find('.' + (x + 40) + '-' + y);
+    fireRight.fadeOut(300);
+    fireRight.remove();
+
+    var fireUp = $('.game-grid').find('.' + x + '-' + (y + 40));
+    fireUp.fadeOut(300);
+    fireUp.remove();
+
+    var fireDown = $('.game-grid').find('.' + x + '-' + (y - 40));
+    fireDown.fadeOut(300);
+    fireDown.remove();
+  };
+
+  // bomb hurts moving characters
+  var bombCharDamage = function bombCharDamage(bX, bY) {
+    $('.mobile').each(function (index) {
+      var charX = $(this).position().left;
+      var charY = $(this).position().top;
+      var charSize = parseInt($(this).css('width'));
+      var bombSize = parseInt($('.bomb').css('width'));
+      if ($('.powerup').length != 0) {
+        range = 1;
+      } else {
+        range = 2;
+      }
+
+      if (charX + charSize > bX - range * 40 && charX < bX + bombSize + range * 40 && charY + charSize > bY && charY < bY + bombSize) {
+        $(this).fadeOut(200);
+        $(this).remove();
+      } else if (charY + charSize > bY - range * 40 && charY < bY + bombSize + range * 40 && charX + charSize > bX && charX < bX + bombSize) {
+        $(this).fadeOut(200);
+        $(this).remove();
+      }
+    });
+  };
 }; // end of bombHandler
 module.exports = bombHandler;
 
@@ -471,7 +476,6 @@ var playerMovement = function playerMovement() {
     };
 
     if (keys[keys.LEFT]) {
-      // <-- animate here
       if (checkCollisionLeft()) {
         movePlayer();
       } else {
@@ -479,7 +483,6 @@ var playerMovement = function playerMovement() {
       }
     }
     if (keys[keys.RIGHT]) {
-      // <-- animate here
       if (checkCollisionRight()) {
         movePlayer();
       } else {
@@ -487,7 +490,6 @@ var playerMovement = function playerMovement() {
       }
     }
     if (keys[keys.UP]) {
-      // <-- animate here
       if (checkCollisionUp()) {
         movePlayer();
       } else {
@@ -495,13 +497,45 @@ var playerMovement = function playerMovement() {
       }
     }
     if (keys[keys.DOWN]) {
-      // <-- animate here
       if (checkCollisionDown()) {
         movePlayer();
       } else {
         movePlayer(0, 1);
       }
     }
+
+    $(document).on('keydown', function (event) {
+      if (event.which == keys.LEFT) {
+        $('.player').removeClass('playerRight playerUp playerDown');
+        $('.player').addClass('playerLeft');
+      }
+      if (event.which == keys.RIGHT) {
+        $('.player').removeClass('playerLeft playerUp playerDown');
+        $('.player').addClass('playerRight');
+      }
+      if (event.which == keys.UP) {
+        $('.player').removeClass('playerRight playerDown playerLeft');
+        $('.player').addClass('playerUp');
+      }
+      if (event.which == keys.DOWN) {
+        $('.player').removeClass('playerRight playerUp playerLeft');
+        $('.player').addClass('playerDown');
+      }
+    });
+    $(document).on('keyup', function (event) {
+      if (event.which == keys.LEFT) {
+        $('.player').removeClass('playerLeft');
+      }
+      if (event.which == keys.RIGHT) {
+        $('.player').removeClass('playerRight');
+      }
+      if (event.which == keys.UP) {
+        $('.player').removeClass('playerUp');
+      }
+      if (event.which == keys.DOWN) {
+        $('.player').removeClass('playerDown');
+      }
+    });
   };
 
   /// update current position on screen
@@ -509,7 +543,9 @@ var playerMovement = function playerMovement() {
 
   /// movement loop
   setInterval(function () {
-    detectPlayerMovement();
+    if ($('.player').length != 0) {
+      detectPlayerMovement();
+    }
   }, 40);
 }; // end of playerMovement() function
 module.exports = playerMovement;
@@ -741,6 +777,7 @@ var interactiveObjects = function interactiveObjects() {
 
       if (powX < playerX + playerSize && powX + powSize > playerX && powY < playerY + playerSize && powY + powSize > playerY) {
         $('.powerup').fadeOut(50);
+        $('.powerup').remove();
         return true;
       }
     }
@@ -749,7 +786,6 @@ var interactiveObjects = function interactiveObjects() {
   var exitListener = setInterval(function () {
     if ($('.ghost').length === 0 && playerExit()) {
       clearInterval(exitListener);
-      $('.exit').addClass('blink');
       levelMusic.pause();
       exitSound.play();
       $(document).unbind();
@@ -768,11 +804,14 @@ var interactiveObjects = function interactiveObjects() {
 
   var gameOverListener = setInterval(function () {
     if ($('.player').css('display') == 'none' || $('.player').length === 0) {
+      $('.player').addClass('.dead');
       clearInterval(gameOverListener);
       levelMusic.pause();
       deathSound.play();
-      $(document).unbind();
-      $('div.game-over').fadeIn(10);
+      setTimeout(function () {
+        $(document).unbind();
+        $('div.game-over').fadeIn(100);
+      }, 500);
     }
   }, 200);
 };

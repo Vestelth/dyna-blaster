@@ -65,6 +65,7 @@ let bombHandler = () => {
       let fireDown = $('.game-grid').find('.'+ x + '-' + (y - 40));
       fireDown.fadeOut(300);
       fireDown.remove();
+
     }
 
     // bomb hurts moving characters
@@ -74,6 +75,11 @@ let bombHandler = () => {
           const charY = $(this).position().top;
           const charSize = parseInt($(this).css('width'));
           const bombSize = parseInt($('.bomb').css('width'));
+          if ($('.powerup').length != 0) {
+            range = 1;
+          } else {
+            range = 2;
+          }
 
           if (charX + charSize > bX - (range * 40) &&
               charX < bX + bombSize + (range * 40) &&

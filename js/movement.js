@@ -118,7 +118,6 @@ let playerMovement = () => {
     }
 
     if ( keys[keys.LEFT] ) {
-      // <-- animate here
       if (checkCollisionLeft()){
         movePlayer();
       } else {
@@ -126,7 +125,6 @@ let playerMovement = () => {
       }
     }
     if ( keys[keys.RIGHT] ) {
-      // <-- animate here
       if (checkCollisionRight()){
         movePlayer();
       } else {
@@ -134,7 +132,6 @@ let playerMovement = () => {
       }
     }
     if ( keys[keys.UP] ) {
-      // <-- animate here
       if (checkCollisionUp()){
         movePlayer();
       } else {
@@ -142,13 +139,45 @@ let playerMovement = () => {
       }
     }
     if ( keys[keys.DOWN] ) {
-      // <-- animate here
       if (checkCollisionDown()){
         movePlayer();
       } else {
         movePlayer(0, 1);
       }
     }
+
+    $(document).on('keydown', function(event) {
+        if (event.which == keys.LEFT) {
+          $('.player').removeClass('playerRight playerUp playerDown');
+          $('.player').addClass('playerLeft');
+        }
+        if (event.which == keys.RIGHT) {
+          $('.player').removeClass('playerLeft playerUp playerDown');
+          $('.player').addClass('playerRight');
+        }
+        if (event.which == keys.UP) {
+          $('.player').removeClass('playerRight playerDown playerLeft');
+          $('.player').addClass('playerUp');
+        }
+        if (event.which == keys.DOWN) {
+          $('.player').removeClass('playerRight playerUp playerLeft');
+          $('.player').addClass('playerDown');
+        }
+    });
+    $(document).on('keyup', function(event) {
+        if (event.which == keys.LEFT) {
+          $('.player').removeClass('playerLeft');
+        }
+        if (event.which == keys.RIGHT) {
+          $('.player').removeClass('playerRight');
+        }
+        if (event.which == keys.UP) {
+          $('.player').removeClass('playerUp');
+        }
+        if (event.which == keys.DOWN) {
+          $('.player').removeClass('playerDown');
+        }
+    });
   }
 
   /// update current position on screen
@@ -156,7 +185,9 @@ let playerMovement = () => {
 
   /// movement loop
   setInterval(function() {
-    detectPlayerMovement();
+    if($('.player').length != 0){
+      detectPlayerMovement();
+    }
   }, 40);
 
 } // end of playerMovement() function

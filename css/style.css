@@ -349,7 +349,7 @@ div.exit {
 
 @keyframes munmar {
     0% {
-      transform: scale(1.02);
+      transform: scale(1.03);
     }
     100% {
       transform: scale(0.98);

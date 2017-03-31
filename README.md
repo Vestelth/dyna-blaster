@@ -5,6 +5,4 @@
 >[Play the game!](https://vestelth.github.io)
 
 
-## example text
-
 ##

@@ -203,20 +203,19 @@ div.exit {
 
 .playerLeft{
   background-size: cover;
-  animation: player-left 0.8s steps(4) infinite;
+  animation: player-left 1s steps(4) infinite;
 }
 .playerRight{
   background-size: cover;
-  animation: player-right 0.8s steps(4) infinite;
+  animation: player-right 1s steps(4) infinite;
 }
 .playerUp{
   background-size: cover;
-  animation: player-up 0.8s steps(4) infinite;
+  animation: player-up 1s steps(4) infinite;
 }
 .playerDown{
-  /*background-position: -4px 0;*/
   background-size: cover;
-  animation: player-down 0.8s steps(4) infinite;
+  animation: player-down 1s steps(4) infinite;
 }
 
 @keyframes player-left {

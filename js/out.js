@@ -79,13 +79,12 @@ var bombHandler = function bombHandler() {
 
   var bricks = $('div.brick');
   var range = 1;
-  var bombNumber = 0;
+  var bombLimit = 1;
   var bricksPositions = [];
   var boom = new Audio("sounds/boom.wav");
 
   // event to make bomb with space button
   $(document).on('keydown', function (event) {
-
     if (event.which == 32) {
       event.preventDefault();
       var playerX = $('.player').position().left;
@@ -94,9 +93,9 @@ var bombHandler = function bombHandler() {
       var bombY = Math.round(playerY / 40) * 40;
 
       // create bomb TO.DO: make 'limit' instead of a 0
-      if (bombNumber === 0) {
-        var makeBomb = $('<div class="bomb"></div>').appendTo($('.game-grid'));
-        $('.bomb').css({
+      if ($('.bomb').length === 0) {
+        var makeBomb = $('<div class="bomb" id="bomb1"></div>').appendTo($('.game-grid'));
+        $('#bomb1').css({
           'left': bombX + 'px',
           'top': bombY + 'px'
         });
@@ -109,13 +108,31 @@ var bombHandler = function bombHandler() {
             // hurt player or ghosts
             bombCharDamage(x, y);
             boom.play();
-            $('.bomb').remove();
-
-            bombNumber--;
+            $('#bomb1').remove();
           }, 2500);
         };
         tickerStart(bombX, bombY);
-        bombNumber++;
+      } else if ($('.powerup').length === 0 && $('.bomb').length === 1) {
+        var bomb2X = Math.round(playerX / 40) * 40;
+        var bomb2Y = Math.round(playerY / 40) * 40;
+        var makeBomb2 = $('<div class="bomb" id="bomb2"></div>').appendTo($('.game-grid'));
+        $('#bomb2').css({
+          'left': bomb2X + 'px',
+          'top': bomb2Y + 'px'
+        });
+
+        // destroy bricks after bomb explodes
+        var _tickerStart = function _tickerStart(x, y) {
+          var ticker = setTimeout(function () {
+            // destroy brick walls
+            brickBurn(x, y);
+            // hurt player or ghosts
+            bombCharDamage(x, y);
+            boom.play();
+            $('#bomb2').remove();
+          }, 2500);
+        };
+        _tickerStart(bomb2X, bomb2Y);
       }
     }
   });
@@ -147,11 +164,6 @@ var bombHandler = function bombHandler() {
       var charY = $(this).position().top;
       var charSize = parseInt($(this).css('width'));
       var bombSize = parseInt($('.bomb').css('width'));
-      if ($('.powerup').length != 0) {
-        range = 1;
-      } else {
-        range = 2;
-      }
 
       if (charX + charSize > bX - range * 40 && charX < bX + bombSize + range * 40 && charY + charSize > bY && charY < bY + bombSize) {
         $(this).fadeOut(400);
@@ -240,7 +252,7 @@ var ghostMovement = function ghostMovement() {
     }
   });
 
-  // checking ghost collisions w/obstacles
+  // checking ghost collisions with obstacles
   var checkCollRight = function checkCollRight(ghost) {
     var gX = ghost.position().left;
     var gY = ghost.position().top;
@@ -303,7 +315,7 @@ var ghostMovement = function ghostMovement() {
     };
 
     var time = setInterval(function () {
-
+      // if no collision, move
       if (direction.right && !checkCollRight(thisGhost)) {
         moveGhost(1, 0, thisGhost);
       } else if (direction.left && !checkCollLeft(thisGhost)) {
@@ -312,9 +324,11 @@ var ghostMovement = function ghostMovement() {
         moveGhost(0, -1, thisGhost);
       } else if (direction.down && !checkCollDown(thisGhost)) {
         moveGhost(0, 1, thisGhost);
+
+        // no taken direction condition
       } else {
         var possibleDir = ['right', 'up', 'down', 'left'];
-
+        // delete direction from array if collision  detected
         if (checkCollRight(thisGhost)) {
           for (var i = 0; i < possibleDir.length; i++) {
             if (possibleDir[i] === 'right') {
@@ -730,7 +744,7 @@ var interactiveObjects = function interactiveObjects() {
   // EXIT LEVEL
   var exit = $('<div class="exit"></div>');
   $('div.game-grid').append(exit);
-
+  // randomize exit position
   var spot = Math.round(Math.random() * ($('.brick').length - 1));
 
   var exitX = Math.round($('.brick').eq(spot).position().left);
@@ -738,7 +752,7 @@ var interactiveObjects = function interactiveObjects() {
   var exitSize = parseInt($('.exit').css('width'));
   var playerSize = parseInt($('.player').css('width'));
   var exitSound = new Audio("sounds/clear.wav");
-
+  // set position
   $('.exit').css({ 'left': exitX });
   $('.exit').css({ 'top': exitY });
 
@@ -748,7 +762,7 @@ var interactiveObjects = function interactiveObjects() {
     } else {
       var playerX = $('.player').position().left;
       var playerY = $('.player').position().top;
-
+      // player - exit collision
       if (exitX < playerX + playerSize && exitX + exitSize > playerX && exitY < playerY + playerSize && exitY + exitSize > playerY) {
         return true;
       }
@@ -758,7 +772,7 @@ var interactiveObjects = function interactiveObjects() {
   //LET'S BUFF THIS GUY, HUH?
   var power = $('<div class="powerup"></div>');
   $('div.game-grid').append(power);
-
+  // randomize powerup position
   var place = Math.round(Math.random() * ($('.brick').length - 1));
 
   var powX = Math.round($('.brick').eq(place).position().left);
@@ -772,9 +786,10 @@ var interactiveObjects = function interactiveObjects() {
     if ($('.player').length === 0) {
       return false;
     } else {
+      // set position
       var playerX = $('.player').position().left;
       var playerY = $('.player').position().top;
-
+      // player - powerup collision
       if (powX < playerX + playerSize && powX + powSize > playerX && powY < playerY + playerSize && powY + powSize > playerY) {
         $('.powerup').fadeOut(50);
         $('.powerup').remove();
@@ -789,7 +804,7 @@ var interactiveObjects = function interactiveObjects() {
       levelMusic.pause();
       exitSound.play();
       $(document).unbind();
-      $('div.win').fadeIn(10);
+      $('div.win').fadeIn(20);
     }
   }, 300);
 
@@ -813,7 +828,7 @@ var interactiveObjects = function interactiveObjects() {
         $('div.game-over').fadeIn(100);
       }, 500);
     }
-  }, 200);
+  }, 250);
 };
 
 module.exports = interactiveObjects;

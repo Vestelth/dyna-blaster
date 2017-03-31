@@ -4,13 +4,12 @@ let bombHandler = () => {
 
     const bricks = $('div.brick');
     let range = 1;
-    let bombNumber = 0;
+    let bombLimit = 1;
     let bricksPositions = [];
     let boom = new Audio("sounds/boom.wav");
 
     // event to make bomb with space button
     $(document).on('keydown', function(event) {
-
         if (event.which == 32) {
           event.preventDefault();
           let playerX = $('.player').position().left;
@@ -19,10 +18,10 @@ let bombHandler = () => {
           let bombY = Math.round( playerY / 40 ) * 40;
 
           // create bomb TO.DO: make 'limit' instead of a 0
-          if (bombNumber === 0){
-            const makeBomb = $('<div class="bomb"></div>')
+          if ($('.bomb').length === 0){
+            const makeBomb = $('<div class="bomb" id="bomb1"></div>')
             .appendTo($('.game-grid'));
-            $('.bomb').css({
+            $('#bomb1').css({
               'left': bombX + 'px',
               'top': bombY + 'px',
             });
@@ -35,14 +34,33 @@ let bombHandler = () => {
                   // hurt player or ghosts
                   bombCharDamage(x, y);
                   boom.play();
-                  $('.bomb').remove();
-
-                  bombNumber --;
-
+                  $('#bomb1').remove();
               }, 2500);
             }
             tickerStart(bombX, bombY);
-            bombNumber ++;
+
+          } else if ($('.powerup').length === 0 && $('.bomb').length === 1) {
+            let bomb2X = Math.round( playerX / 40 ) * 40;
+            let bomb2Y = Math.round( playerY / 40 ) * 40;
+            const makeBomb2 = $('<div class="bomb" id="bomb2"></div>')
+            .appendTo($('.game-grid'));
+            $('#bomb2').css({
+              'left': bomb2X + 'px',
+              'top': bomb2Y + 'px',
+            });
+
+            // destroy bricks after bomb explodes
+            let tickerStart = (x, y) => {
+              let ticker = setTimeout(() => {
+                  // destroy brick walls
+                  brickBurn(x, y);
+                  // hurt player or ghosts
+                  bombCharDamage(x, y);
+                  boom.play();
+                  $('#bomb2').remove();
+              }, 2500);
+            }
+            tickerStart(bomb2X, bomb2Y);
           }
         }
     });
@@ -75,12 +93,7 @@ let bombHandler = () => {
           const charY = $(this).position().top;
           const charSize = parseInt($(this).css('width'));
           const bombSize = parseInt($('.bomb').css('width'));
-          if ($('.powerup').length != 0) {
-            range = 1;
-          } else {
-            range = 2;
-          }
-          
+
           if (charX + charSize > bX - (range * 40) &&
               charX < bX + bombSize + (range * 40) &&
               charY + charSize > bY && charY < bY + bombSize)

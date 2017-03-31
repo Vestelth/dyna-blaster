@@ -73,7 +73,7 @@
         }
     });
 
-    // checking ghost collisions w/obstacles
+    // checking ghost collisions with obstacles
     let checkCollRight = (ghost) => {
         let gX = ghost.position().left;
         let gY = ghost.position().top;
@@ -156,7 +156,7 @@
       }
 
       let time = setInterval(function () {
-
+        // if no collision, move
         if (direction.right && !checkCollRight(thisGhost)){
           moveGhost(1, 0, thisGhost);
         } else if (direction.left && !checkCollLeft(thisGhost)){
@@ -165,9 +165,11 @@
           moveGhost(0, -1, thisGhost);
         } else if (direction.down && !checkCollDown(thisGhost)){
           moveGhost(0, 1, thisGhost);
+
+        // no taken direction condition
         } else {
           let possibleDir = ['right','up','down','left'];
-
+          // delete direction from array if collision  detected
           if (checkCollRight(thisGhost)) {
             for (var i = 0; i < possibleDir.length; i++) {
               if (possibleDir[i] === 'right'){

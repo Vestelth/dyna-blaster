@@ -154,10 +154,10 @@ var bombHandler = function bombHandler() {
       }
 
       if (charX + charSize > bX - range * 40 && charX < bX + bombSize + range * 40 && charY + charSize > bY && charY < bY + bombSize) {
-        $(this).fadeOut(200);
+        $(this).fadeOut(400);
         $(this).remove();
       } else if (charY + charSize > bY - range * 40 && charY < bY + bombSize + range * 40 && charX + charSize > bX && charX < bX + bombSize) {
-        $(this).fadeOut(200);
+        $(this).fadeOut(400);
         $(this).remove();
       }
     });
@@ -192,7 +192,7 @@ var ghostMovement = function ghostMovement() {
         var ghostSize = parseInt($(this).css('width'));
 
         if (ghostX < playerX + playerSize && ghostX + ghostSize > playerX && ghostY < playerY + playerSize && ghostY + ghostSize > playerY) {
-          $('.player').fadeOut(200);
+          $('.player').fadeOut(400);
         }
       });
     }

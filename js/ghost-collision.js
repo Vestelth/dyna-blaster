@@ -22,7 +22,7 @@
               ghostY < playerY + playerSize &&
               ghostY + ghostSize > playerY)
           {
-              $('.player').fadeOut(200);
+              $('.player').fadeOut(400);
           }
         });
       }

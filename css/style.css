@@ -167,7 +167,7 @@ div.player {
   margin-left: -2px;
   background-image: url('../img/1forw0.png');
   background-size: cover;
-  border: 1px solid blue;
+  background-position: -2px 0;
 }
 
 div.bomb {
@@ -202,80 +202,77 @@ div.exit {
 }
 
 .playerLeft{
-  background-position: -4px 0;
   background-size: cover;
   animation: player-left 0.8s steps(4) infinite;
 }
 .playerRight{
-  background-position: -4px 0;
   background-size: cover;
   animation: player-right 0.8s steps(4) infinite;
 }
 .playerUp{
-  background-position: -4px -0;
   background-size: cover;
   animation: player-up 0.8s steps(4) infinite;
 }
 .playerDown{
-  background-position: -4px 0;
+  /*background-position: -4px 0;*/
   background-size: cover;
   animation: player-down 0.8s steps(4) infinite;
 }
 
 @keyframes player-left {
   0%{
-    background-image: url('../img/1left0.png');
-  }
-  34%{
     background-image: url('../img/1left1.png');
   }
-  67% {
+  34%{
     background-image: url('../img/1left0.png');
   }
-  100% {
+  67% {
     background-image: url('../img/1left2.png');
+  }
+  100% {
+    background-image: url('../img/1left0.png');
   }
 }
 @keyframes player-right {
   0%{
-    background-image: url('../img/1right0.png');
-  }
-  34%{
     background-image: url('../img/1right1.png');
   }
-  67% {
+  34%{
     background-image: url('../img/1right0.png');
   }
-  100% {
+  67% {
     background-image: url('../img/1right2.png');
+  }
+  100% {
+    background-image: url('../img/1right0.png');
   }
 }
 @keyframes player-up {
   0%{
-    background-image: url('../img/1back0.png');
-  }
-  34%{
     background-image: url('../img/1back1.png');
   }
-  67% {
+  34%{
     background-image: url('../img/1back0.png');
   }
-  100% {
+  67% {
     background-image: url('../img/1back2.png');
+  }
+  100% {
+    background-image: url('../img/1back0.png');
   }
 }
 @keyframes player-down {
   0%{
-    background-image: url('../img/1forw0.png');
-  }
-  34%{
     background-image: url('../img/1forw1.png');
   }
-  67% {
+  34%{
     background-image: url('../img/1forw0.png');
   }
-  100% {
+  67% {
     background-image: url('../img/1forw2.png');
+  }
+  100% {
+    background-image: url('../img/1forw0.png');
   }
 }
 

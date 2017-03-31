@@ -85,14 +85,14 @@ let bombHandler = () => {
               charX < bX + bombSize + (range * 40) &&
               charY + charSize > bY && charY < bY + bombSize)
           {
-              $(this).fadeOut(200);
+              $(this).fadeOut(400);
               $(this).remove();
           } else if
              (charY + charSize > bY - (range * 40) &&
               charY < bY + bombSize + (range * 40) &&
               charX + charSize > bX && charX < bX + bombSize)
           {
-              $(this).fadeOut(200);
+              $(this).fadeOut(400);
               $(this).remove();
           }
         });

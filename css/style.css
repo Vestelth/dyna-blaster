@@ -11,6 +11,14 @@ body {
   background-color: rgb(0, 9, 38);
 }
 
+body::after{
+    position:absolute; width:0; height:0; overflow:hidden; z-index:-1;
+    content:url('../img/1back0.png') url('../img/1back1.png') url('../img/1back2.png') url('../img/1forw0.png') url('../img/1forw1.png') url('../img/1forw2.png') url('../img/1left0.png') url('../img/1left1.png') url('../img/1left2.png')
+    url('../img/1right0.png')
+    url('../img/1right1.png')
+    url('../img/mid0.png') url('../img/mid1.png') url('../img/mid2.png') url('../img/mid3.png') url('../img/mid4.png');
+}
+
 a {
   color: rgb(50, 135, 233);
 }

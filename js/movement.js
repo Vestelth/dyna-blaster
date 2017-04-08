@@ -105,7 +105,7 @@ let playerMovement = () => {
         let playerY = $('.player').position().top;
         let obstacle = { down : false }
         for ( let i = 0; i < objPos.length; i++ ){
-          if (playerY + playerSize + 2 >= objPos[i][1] &&
+          if (playerY + playerSize + 4 >= objPos[i][1] &&
               playerY < objPos[i][1] &&
               playerX + playerSize > objPos[i][0] &&
               playerX < objPos[i][0] + objSize
